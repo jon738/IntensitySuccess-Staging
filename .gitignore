@@ -1,0 +1,28 @@
+# ===== IntensitySuccess-Staging .gitignore =====
+
+# OS / Editor junk
+.DS_Store
+Thumbs.db
+*.log
+.idea/
+.vscode/
+*.tmp
+*.swp
+
+# Node or build-related (if you ever add build tools later)
+node_modules/
+dist/
+build/
+.cache/
+.parcel-cache/
+.next/
+out/
+coverage/
+
+# GitHub workflow cache or artifact folders
+.github/workflows/*.bak
+*.env
+.env.local
+
+# Don’t track CNAME (staging uses default GitHub Pages domain)
+CNAME
