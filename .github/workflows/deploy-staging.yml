@@ -1,0 +1,22 @@
+name: Deploy Staging (GitHub Pages)
+
+on:
+  workflow_dispatch:        # allow manual runs from the Actions tab
+  push:
+    branches: [ main ]      # or change to the branch you edit in prod
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Push site to staging repo main
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          personal_token: ${{ secrets.STAGING_TOKEN }}   # PAT from your account
+          external_repository: jon738/IntensitySuccess-Staging
+          publish_branch: main                           # <— push into staging main
+          publish_dir: ./                                # where index.html lives
+          exclude_assets: 'README.md,CNAME'
