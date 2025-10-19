@@ -1,6 +1,7 @@
 # ===== IntensitySuccess-Staging .gitignore =====
+# Purpose: keep staging clean of production or local-only files
 
-# OS / Editor junk
+# --- System / editor junk ---
 .DS_Store
 Thumbs.db
 *.log
@@ -9,7 +10,12 @@ Thumbs.db
 *.tmp
 *.swp
 
-# Node or build-related (if you ever add build tools later)
+# --- Local environments / credentials ---
+.env
+.env.local
+.env.*.local
+
+# --- Node or build-related (in case you add build tools) ---
 node_modules/
 dist/
 build/
@@ -19,10 +25,27 @@ build/
 out/
 coverage/
 
-# GitHub workflow cache or artifact folders
+# --- GitHub Actions temp / backup files ---
 .github/workflows/*.bak
-*.env
-.env.local
+*.bak
+*.old
+*.tmp
 
-# Don’t track CNAME (staging uses default GitHub Pages domain)
+# --- Production-only files to ignore in staging ---
+README.md
 CNAME
+sitemap.xml
+robots.txt
+favicon.ico
+manifest.json
+service-worker.js
+
+# --- Backups or previews ---
+*_backup.html
+*_draft.html
+*_test.html
+
+# --- Misc ---
+*.zip
+*.tar
+*.tar.gz
