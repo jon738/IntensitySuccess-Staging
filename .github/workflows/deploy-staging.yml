@@ -19,4 +19,4 @@ jobs:
           external_repository: jon738/IntensitySuccess-Staging
           publish_branch: main                           # <— push into staging main
           publish_dir: ./                                # where index.html lives
-          exclude_assets: 'README.md,CNAME'
+          exclude_assets: 'README.md,CNAME,assets,github/workflows'
