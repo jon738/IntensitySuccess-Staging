@@ -36,14 +36,7 @@
       <a href="#faq">FAQ</a>
       <a href="/blog/">Blog</a>
       <a class="btn btn-primary" href="#contact">Contact</a>
-    </nav>
-    <nav class="site-nav">
-  <a href="#services">Services</a>
-  <a href="#outcomes">Results</a>
-  <a href="#faq">FAQ</a>
-  <a href="/blog/" class="nav-link" id="nav-blog">Blog</a>
-  <a class="btn btn-primary" href="#contact">Contact</a>
-</nav>
+    
     <button class="menu-toggle" aria-label="Menu">☰</button>
   </div>
 </header>
@@ -288,23 +281,20 @@
   </div>
 </footer>
 
-<!-- JS for blog nav highlight -->
+<!-- Scripts: keep everything inside ONE script tag -->
 <script>
-  const path = window.location.pathname;
-  if (path.startsWith('/blog')) {
+(function () {
+  /* --- Footer year --- */
+  const yEl = document.getElementById('y');
+  if (yEl) yEl.textContent = new Date().getFullYear();
+
+  /* --- Blog nav highlight --- */
+  if (window.location.pathname.startsWith('/blog')) {
     const blogLink = document.getElementById('nav-blog');
     if (blogLink) blogLink.classList.add('active');
   }
 
-  const y = document.getElementById('y');
-  if (y) y.textContent = new Date().getFullYear();
-</script>
-(() => {
-  // ----- Footer year
-  const yearEl = document.getElementById('year');
-  if (yearEl) yearEl.textContent = new Date().getFullYear();
-
-  // ----- Mobile menu
+  /* --- Mobile menu --- */
   const toggle = document.querySelector('.menu-toggle');
   const nav = document.querySelector('.site-nav');
   if (toggle && nav) {
@@ -314,7 +304,7 @@
     });
   }
 
-  // ----- Header scrolled state
+  /* --- Header scrolled state --- */
   const onScroll = () => {
     if (window.scrollY > 6) document.body.classList.add('scrolled');
     else document.body.classList.remove('scrolled');
@@ -322,49 +312,42 @@
   onScroll();
   window.addEventListener('scroll', onScroll);
 
-  // ----- Reveal-on-scroll (.reveal -> .show)
-  const setupReveal = () => {
-    const revealEls = document.querySelectorAll('.reveal');
-    if (!revealEls.length) return;
-
+  /* --- Reveal-on-scroll (.reveal -> .show) --- */
+  const revealEls = document.querySelectorAll('.reveal');
+  if (revealEls.length) {
     if ('IntersectionObserver' in window) {
-      const io = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((en) => {
-            if (en.isIntersecting) {
-              en.target.classList.add('show');
-              io.unobserve(en.target);
-            }
-          });
-        },
-        { threshold: 0.12, rootMargin: '0px 0px -60px 0px' }
-      );
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((en) => {
+          if (en.isIntersecting) {
+            en.target.classList.add('show');
+            io.unobserve(en.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
       revealEls.forEach((el) => io.observe(el));
     } else {
       revealEls.forEach((el) => el.classList.add('show'));
     }
-  };
-  setupReveal();
+  }
 
-  // ----- KPI counters (keep symbols)
+  /* --- KPI counters (keep symbols) --- */
   const decimalsOf = (n) => {
     const s = String(n);
     return (s.split('.')[1] || '').length;
   };
-
   const startCounters = (root = document) => {
     root.querySelectorAll('.kpi-number').forEach((el) => {
       if (el.dataset.animated === 'true') return;
       el.dataset.animated = 'true';
 
       const initial = el.textContent.trim();
-      const m = initial.match(/^(\D*)(-?\d+(?:\.\d+)?)(.*)$/); // prefix, number, suffix
+      const m = initial.match(/^(\D*)(-?\d+(?:\.\d+)?)(.*)$/);
       const prefix = el.dataset.prefix ?? (m ? m[1] : '');
       const suffix = el.dataset.suffix ?? (m ? m[3] : '');
       const target = Number(el.dataset.target ?? (m ? m[2] : 0)) || 0;
       const precision = decimalsOf(el.dataset.target ?? target);
 
-      const frames = 60; // ~1s
+      const frames = 60;               // ~1s
       const step = target / frames || 1;
       let val = m && m[2] ? Number(m[2]) || 0 : 0;
 
@@ -376,65 +359,51 @@
         el.textContent = `${prefix}${formatted}${suffix}`;
         if (!done) requestAnimationFrame(tick);
       };
-
       requestAnimationFrame(tick);
     });
   };
-
   const outcomes = document.getElementById('outcomes');
   if (outcomes && 'IntersectionObserver' in window) {
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((en) => {
-          if (en.isIntersecting) {
-            startCounters(outcomes);
-            io.disconnect();
-          }
-        });
-      },
-      { threshold: 0.25 }
-    );
-    io.observe(outcomes);
+    const io2 = new IntersectionObserver((entries) => {
+      entries.forEach((en) => {
+        if (en.isIntersecting) {
+          startCounters(outcomes);
+          io2.disconnect();
+        }
+      });
+    }, { threshold: 0.25 });
+    io2.observe(outcomes);
   } else {
     startCounters();
   }
-})();
-</script>
-  <script>
-(function () {
+
+  /* --- Formspree async submit (requires #contact-form & #form-status) --- */
   const form   = document.getElementById('contact-form');
   const status = document.getElementById('form-status');
-  if (!form) return;
-
-  const okMsg  = "Thanks! I’ll reply with next steps shortly.";
-  const errMsg = "Something went wrong. Please try again, or email hello@intensitysuccess.com.";
-
-  form.addEventListener('submit', async function (e) {
-    e.preventDefault();
-    status.textContent = "Sending…";
-
-    const data = new FormData(form);
-
-    try {
-      const res = await fetch(form.action, {
-        method: form.method,
-        body: data,
-        headers: { 'Accept': 'application/json' }
-      });
-
-      if (res.ok) {
-        form.reset();
-        status.textContent = okMsg;
-      } else {
-        const json = await res.json().catch(() => null);
-        status.textContent = json && json.errors
-          ? json.errors.map(e => e.message).join(" ")
-          : errMsg;
+  if (form && status) {
+    const okMsg  = "Thanks! I’ll reply with next steps shortly.";
+    const errMsg = "Something went wrong. Please try again, or email hello@intensitysuccess.com.";
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      status.textContent = "Sending…";
+      try {
+        const res = await fetch(form.action, {
+          method: form.method,
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) { form.reset(); status.textContent = okMsg; }
+        else {
+          const json = await res.json().catch(() => null);
+          status.textContent = json && json.errors
+            ? json.errors.map(e => e.message).join(" ")
+            : errMsg;
+        }
+      } catch {
+        status.textContent = errMsg;
       }
-    } catch {
-      status.textContent = errMsg;
-    }
-  });
+    });
+  }
 })();
 </script>
 </body>
