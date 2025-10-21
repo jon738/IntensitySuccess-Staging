@@ -43,41 +43,61 @@
     if (y) y.textContent = new Date().getFullYear();
   </script>
     <!-- existing scripts here -->
-  <script>
-  (function () {
-    var projectPath = '/IntensitySuccess-Staging/';
-    var prefix = location.pathname.startsWith(projectPath) ? projectPath : '/';
+<script>
+(function () {
+  // figure out the right prefix (prod "/" vs GH Pages "/IntensitySuccess-Staging/")
+  var projectPath = '/IntensitySuccess-Staging/';
+  var prefix = location.pathname.startsWith(projectPath) ? projectPath : '/';
 
-    function initHeaderBehaviors() {
-      const toggle = document.querySelector('.menu-toggle');
-      const nav = document.querySelector('.site-nav');
-      if (toggle && nav) {
-        toggle.addEventListener('click', () => {
-          const open = nav.classList.toggle('open');
-          toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-        });
-      }
-    }
+  function setActiveNav() {
+    // normalize current path so both prod and staging look like "/blog/…"
+    var path = location.pathname;
+    if (path.startsWith(projectPath)) path = path.slice(projectPath.length - 1); // keep leading "/"
 
-    function loadHeader() {
-      const mount = document.getElementById('site-header');
-      if (!mount) return;
-      fetch(prefix + 'includes/header.html')
-        .then(r => r.text())
-        .then(html => {
-          mount.innerHTML = html;
-          initHeaderBehaviors();
-        })
-        .catch(err => console.error('Header load failed:', err));
-    }
+    // Mark active by route family
+    var rules = [
+      { id: 'nav-blog',   test: p => p === '/blog' || p === '/blog/' || p.startsWith('/blog/') },
+      { id: 'nav-videos', test: p => p === '/videos' || p === '/videos/' || p.startsWith('/videos/') },
+      { id: 'nav-news',   test: p => p === '/news' || p === '/news/' || p.startsWith('/news/') },
+    ];
 
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', loadHeader);
-    } else {
-      loadHeader();
+    rules.forEach(({id, test}) => {
+      var el = document.getElementById(id);
+      if (el && test(path)) el.classList.add('active');
+    });
+  }
+
+  function wireHeaderBehaviors() {
+    const toggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('.site-nav');
+    if (toggle && nav) {
+      toggle.addEventListener('click', () => {
+        const open = nav.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
     }
-  })();
-  </script>
+    setActiveNav(); // <<— run AFTER header is in the DOM
+  }
+
+  function loadHeader() {
+    const mount = document.getElementById('site-header');
+    if (!mount) return;
+    fetch(prefix + 'includes/header.html', { cache: 'no-cache' })
+      .then(r => r.text())
+      .then(html => {
+        mount.innerHTML = html;
+        wireHeaderBehaviors();
+      })
+      .catch(err => console.error('Header load failed:', err));
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadHeader);
+  } else {
+    loadHeader();
+  }
+})();
+</script>
 </body>
 </html>
 
