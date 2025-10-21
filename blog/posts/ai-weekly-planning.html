@@ -10,27 +10,7 @@
   <meta property="og:description" content="A 20-minute planning cadence that protects deep work and leverages AI to remove low-value tasks.">
   <meta property="og:type" content="article">
 </head>
-<script>
-(async () => {
-  try {
-    const res = await fetch('/includes/header.html');
-    const html = await res.text();
-    document.getElementById('site-header').innerHTML = html;
 
-    // Optional: Activate nav toggle after insertion
-    const toggle = document.querySelector('.menu-toggle');
-    const nav = document.querySelector('.site-nav');
-    if (toggle && nav) {
-      toggle.addEventListener('click', () => {
-        const open = nav.classList.toggle('open');
-        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-      });
-    }
-  } catch (err) {
-    console.error('Header load failed:', err);
-  }
-})();
-</script>
 <body>
 <div id="site-header"></div>
 
@@ -102,5 +82,41 @@
   </footer>
 
   <script>document.getElementById('y').textContent=new Date().getFullYear()</script>
+  <!-- existing scripts here -->
+  <script>
+  (function () {
+    var projectPath = '/IntensitySuccess-Staging/';
+    var prefix = location.pathname.startsWith(projectPath) ? projectPath : '/';
+
+    function initHeaderBehaviors() {
+      const toggle = document.querySelector('.menu-toggle');
+      const nav = document.querySelector('.site-nav');
+      if (toggle && nav) {
+        toggle.addEventListener('click', () => {
+          const open = nav.classList.toggle('open');
+          toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+      }
+    }
+
+    function loadHeader() {
+      const mount = document.getElementById('site-header');
+      if (!mount) return;
+      fetch(prefix + 'includes/header.html')
+        .then(r => r.text())
+        .then(html => {
+          mount.innerHTML = html;
+          initHeaderBehaviors();
+        })
+        .catch(err => console.error('Header load failed:', err));
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', loadHeader);
+    } else {
+      loadHeader();
+    }
+  })();
+  </script>
 </body>
 </html>
