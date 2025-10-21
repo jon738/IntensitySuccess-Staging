@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <head>
+  <!-- ... your existing meta + styles ... -->
   <script>
-    (function () {
-      // Handle GitHub Pages subpath (staging) vs production root
-      var projectPath = '/IntensitySuccess-Staging/';
-      var base = location.pathname.startsWith(projectPath) ? projectPath : '/';
-      var baseEl = document.createElement('base');
-      baseEl.setAttribute('href', base);
-      document.head.prepend(baseEl);
-    })();
+  (function () {
+    var projectPath = '/IntensitySuccess-Staging/';     // GH Pages repo path
+    var base = location.pathname.startsWith(projectPath) ? projectPath : '/';
+    var el = document.createElement('base');
+    el.setAttribute('href', base);
+    document.head.prepend(el);
+  })();
   </script>
+</head>
   <meta name="theme-color" content="#f4f6fa" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#0b1220" media="(prefers-color-scheme: dark)">
   <meta charset="utf-8" />
@@ -34,27 +36,7 @@
     <style>.reveal { opacity: 1 !important; transform: none !important; }</style>
   </noscript>
 </head>
-  <script>
-(async () => {
-  try {
-    const res = await fetch('/includes/header.html');
-    const html = await res.text();
-    document.getElementById('site-header').innerHTML = html;
 
-    // Optional: Activate nav toggle after insertion
-    const toggle = document.querySelector('.menu-toggle');
-    const nav = document.querySelector('.site-nav');
-    if (toggle && nav) {
-      toggle.addEventListener('click', () => {
-        const open = nav.classList.toggle('open');
-        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-      });
-    }
-  } catch (err) {
-    console.error('Header load failed:', err);
-  }
-})();
-</script>
 <body>
 <div id="site-header"></div>
 
@@ -378,5 +360,41 @@
     }
   })();
   </script>
+  <script>
+(function () {
+  // figure out the right prefix (prod "/" vs GH Pages "/IntensitySuccess-Staging/")
+  var projectPath = '/IntensitySuccess-Staging/';
+  var prefix = location.pathname.startsWith(projectPath) ? projectPath : '/';
+
+  function initHeaderBehaviors() {
+    const toggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('.site-nav');
+    if (toggle && nav) {
+      toggle.addEventListener('click', () => {
+        const open = nav.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+    }
+  }
+
+  function loadHeader() {
+    const mount = document.getElementById('site-header');
+    if (!mount) return;
+    fetch(prefix + 'includes/header.html')
+      .then(r => r.text())
+      .then(html => {
+        mount.innerHTML = html;
+        initHeaderBehaviors(); // wire up menu after injection
+      })
+      .catch(err => console.error('Header load failed:', err));
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadHeader);
+  } else {
+    loadHeader();
+  }
+})();
+</script>
 </body>
 </html>
