@@ -1,6 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script>
+  (function () {
+    // If hosted under a project path on GitHub Pages, set that as the base.
+    // Otherwise default to '/'
+    var projectPath = '/IntensitySuccess-Staging/';   // ← your staging repo path
+    var base = location.pathname.startsWith(projectPath) ? projectPath : '/';
+    var baseEl = document.createElement('base');
+    baseEl.setAttribute('href', base);
+    document.head.prepend(baseEl);
+  })();
+</script>
   <meta name="theme-color" content="#f4f6fa" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#0b1220" media="(prefers-color-scheme: dark)">
   <meta charset="utf-8" />
