@@ -276,18 +276,29 @@
     </section>
   </main>
 
-  <!-- Footer -->
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <p>© <span id="year"></span> Intensity Success · All rights reserved.</p>
-      <div class="footer-links">
-        <a href="#">Privacy</a>
-        <a href="#">Terms</a>
-      </div>
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p>© <span id="y"></span> Intensity Success · All rights reserved.</p>
+    <div class="footer-links">
+      <a href="/privacy">Privacy</a>
+      <a href="/terms">Terms</a>
+      <a href="/blog/">Blog</a>
     </div>
-  </footer>
+  </div>
+</footer>
 
- <script>
+<!-- JS for blog nav highlight -->
+<script>
+  const path = window.location.pathname;
+  if (path.startsWith('/blog')) {
+    const blogLink = document.getElementById('nav-blog');
+    if (blogLink) blogLink.classList.add('active');
+  }
+
+  const y = document.getElementById('y');
+  if (y) y.textContent = new Date().getFullYear();
+</script>
 (() => {
   // ----- Footer year
   const yearEl = document.getElementById('year');
@@ -425,17 +436,6 @@
     }
   });
 })();
-</script>
-  <script>
-  // Highlight "Blog" in header if URL path starts with /blog
-  const path = window.location.pathname;
-  if (path.startsWith('/blog')) {
-    const blogLink = document.getElementById('nav-blog');
-    if (blogLink) blogLink.classList.add('active');
-  }
-  // Preserve your footer year updater
-  const y = document.getElementById('y');
-  if (y) y.textContent = new Date().getFullYear();
 </script>
 </body>
 </html>
