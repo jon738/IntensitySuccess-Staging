@@ -2,21 +2,18 @@
 <html lang="en">
 <head>
   <script>
-  (function () {
-    // If hosted under a project path on GitHub Pages, set that as the base.
-    // Otherwise default to '/'
-    var projectPath = '/IntensitySuccess-Staging/';   // ← your staging repo path
-    var base = location.pathname.startsWith(projectPath) ? projectPath : '/';
-    var baseEl = document.createElement('base');
-    baseEl.setAttribute('href', base);
-    document.head.prepend(baseEl);
-  })();
-</script>
+    (function () {
+      var projectPath = '/IntensitySuccess-Staging/';   // staging repo path
+      var base = location.pathname.startsWith(projectPath) ? projectPath : '/';
+      var baseEl = document.createElement('base');
+      baseEl.setAttribute('href', base);
+      document.head.prepend(baseEl);
+    })();
+  </script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Dopamine, Systems, and Sustainable Motivation — Intensity Success</title>
   <meta name="description" content="Use dopamine wisely: build systems that make progress obvious, reduce friction, and keep you moving without burnout." />
-  <!-- from /blog/posts/ back to root stylesheet -->
   <link rel="stylesheet" href="style.css">
 </head>
 
@@ -24,14 +21,14 @@
   <!-- Header -->
   <header class="site-header">
     <div class="nav container">
-      <a href="/" class="logo">Intensity Success</a>
+      <a href="index.html" class="logo">Intensity Success</a>
       <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
       <nav class="site-nav">
-        <a href="/#services">Services</a>
-        <a href="/#outcomes">Results</a>
-        <a href="/#faq">FAQ</a>
+        <a href="index.html#services">Services</a>
+        <a href="index.html#outcomes">Results</a>
+        <a href="index.html#faq">FAQ</a>
         <a href="blog/" id="nav-blog" class="active">Blog</a>
-        <a class="btn btn-primary" href="/#contact">Contact</a>
+        <a class="btn btn-primary" href="index.html#contact">Contact</a>
       </nav>
     </div>
   </header>
@@ -39,7 +36,7 @@
   <!-- Article -->
   <article class="section alt">
     <div class="container narrow">
-      <p class="form-note" style="margin:0 0 8px;"><a href="/blog/">&larr; Back to Blog</a></p>
+      <p class="form-note" style="margin:0 0 8px;"><a href="blog/">&larr; Back to Blog</a></p>
       <h1 style="text-align:center; margin-bottom:10px;">Dopamine, Systems, and Sustainable Motivation</h1>
       <p class="form-note" style="text-align:center; margin:0 0 32px;">
         Read time: ~6 min · Posted <time datetime="2025-10-21">Oct 21, 2025</time>
@@ -109,9 +106,9 @@ Daily Scorecard
     <div class="footer-inner">
       <p>© <span id="y"></span> Intensity Success · All rights reserved.</p>
       <div class="footer-links">
-        <a href="/privacy">Privacy</a>
-        <a href="/terms">Terms</a>
-        <a href="/blog/">Blog</a>
+        <a href="privacy">Privacy</a>
+        <a href="terms">Terms</a>
+        <a href="blog/">Blog</a>
       </div>
     </div>
   </footer>
@@ -135,7 +132,7 @@ Daily Scorecard
     if (toggle && nav) {
       toggle.addEventListener('click', () => {
         const open = nav.classList.toggle('open');
-        toggle.setAttribute('aria-expanded', open);
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
       });
     }
 
