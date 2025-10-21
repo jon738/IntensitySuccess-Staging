@@ -160,34 +160,59 @@
       </div>
     </section>
 
-    <!-- Contact (after FAQ now) -->
-    <section id="contact" class="section">
-      <div class="container narrow">
-        <h2>Contact</h2>
-        <p class="form-note" style="margin-bottom:12px;">Tell me a bit about your goals and timeline. I’ll reply with next steps and a link to book a call.</p>
+ <!-- Contact (after FAQ now) -->
+<section id="contact" class="section">
+  <div class="container narrow">
+    <h2>Contact</h2>
+    <p class="form-note" style="margin-bottom:12px;">
+      Tell me a bit about your goals and timeline. I’ll reply with next steps and a link to book a call.
+    </p>
 
-        <form class="contact" action="https://formspree.io/f/yourid" method="POST">
-          <label>
-            <span>Name</span>
-            <input type="text" name="name" required>
-          </label>
-          <label>
-            <span>Email</span>
-            <input type="email" name="email" required>
-          </label>
-          <label>
-            <span>What are you trying to achieve in the next 90 days?</span>
-            <textarea name="message" rows="6" required></textarea>
-          </label>
-          <button class="btn btn-primary" type="submit">Request Discovery Call</button>
-          <p class="form-note">Prefer email? <a
-  href="mailto:hello@intensitysuccess.com?subject=Discovery%20Call%20Request&body=Hi%20Intensity%20Success%2C%0A%0AMy%20name%20is%20%5BYour%20Name%5D.%0ACompany%20(optional)%3A%20%5BYour%20Company%5D%0A%0AHere%E2%80%99s%20what%20I%E2%80%99m%20trying%20to%20achieve%20in%20the%20next%2090%20days%3A%0A%5BGoals%20and%20timeline%5D%0A%0AThanks!"
->
-  hello@intensitysuccess.com
-</a></p>
-        </form>
-      </div>
-    </section>
+    <!-- ✅ Formspree-connected version -->
+    <form id="contact-form"
+          class="contact"
+          action="https://formspree.io/f/xqayolvj"
+          method="POST"
+          novalidate>
+
+      <!-- Name -->
+      <label for="name">
+        <span>Name</span>
+        <input id="name" name="name" type="text" autocomplete="name" required />
+      </label>
+
+      <!-- Email -->
+      <label for="email">
+        <span>Email</span>
+        <input id="email" name="email" type="email" autocomplete="email" required />
+      </label>
+
+      <!-- Message -->
+      <label for="message">
+        <span>What are you trying to achieve in the next 90 days?</span>
+        <textarea id="message" name="message" required></textarea>
+      </label>
+
+      <!-- Hidden extras -->
+      <input type="hidden" name="_subject" value="Discovery Call Request (Intensity Success)" />
+      <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="position:absolute;left:-5000px;opacity:0;" aria-hidden="true" />
+
+      <!-- Submit -->
+      <button type="submit" class="btn btn-primary">Request Discovery Call</button>
+
+      <!-- Inline status text -->
+      <p id="form-status" class="form-note" role="status" aria-live="polite" style="min-height:1.2em;"></p>
+
+      <!-- Email fallback -->
+      <p class="form-note">
+        Prefer email? 
+        <a href="mailto:hello@intensitysuccess.com?subject=Discovery%20Call%20Request&body=Hi%20Intensity%20Success%2C%0A%0AMy%20name%20is%20%5BYour%20Name%5D.%0ACompany%20(optional)%3A%20%5BYour%20Company%5D%0A%0AHere%E2%80%99s%20what%20I%E2%80%99m%20trying%20to%20achieve%20in%20the%20next%2090%20days%3A%0A%5BGoals%20and%20timeline%5D%0A%0AThanks!">
+          hello@intensitysuccess.com
+        </a>
+      </p>
+    </form>
+  </div>
+</section>
 <script>
   // Assumes your form has id="contact-form" and fields with the below IDs
   document.addEventListener('DOMContentLoaded', function () {
@@ -364,6 +389,43 @@
   } else {
     startCounters();
   }
+})();
+</script>
+  <script>
+(function () {
+  const form   = document.getElementById('contact-form');
+  const status = document.getElementById('form-status');
+  if (!form) return;
+
+  const okMsg  = "Thanks! I’ll reply with next steps shortly.";
+  const errMsg = "Something went wrong. Please try again, or email hello@intensitysuccess.com.";
+
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    status.textContent = "Sending…";
+
+    const data = new FormData(form);
+
+    try {
+      const res = await fetch(form.action, {
+        method: form.method,
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (res.ok) {
+        form.reset();
+        status.textContent = okMsg;
+      } else {
+        const json = await res.json().catch(() => null);
+        status.textContent = json && json.errors
+          ? json.errors.map(e => e.message).join(" ")
+          : errMsg;
+      }
+    } catch {
+      status.textContent = errMsg;
+    }
+  });
 })();
 </script>
 </body>
