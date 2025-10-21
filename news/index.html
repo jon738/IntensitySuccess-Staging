@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Base path helper (GitHub Pages safe) -->
+  <script>
+    (function () {
+      var projectPath = '/IntensitySuccess-Staging/';   // ← staging repo path
+      var base = location.pathname.startsWith(projectPath) ? projectPath : '/';
+      var baseEl = document.createElement('base');
+      baseEl.setAttribute('href', base);
+      document.head.prepend(baseEl);
+    })();
+  </script>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI News — Intensity Success</title>
+  <meta name="description" content="The latest AI developments, research, tools, and industry stories — updated automatically." />
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    /* Page-specific additions */
+    .filter-tabs {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 0 0 22px;
+    }
+    .filter-tabs .tab {
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-weight: 600;
+      border: 1px solid rgba(0, 0, 0, .08);
+      background: var(--panel);
+      box-shadow: var(--shadow-sm);
+      cursor: pointer;
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease, color .2s ease;
+    }
+    .filter-tabs .tab[aria-pressed="true"] {
+      background: linear-gradient(135deg, var(--brand) 0%, var(--brand-2) 100%);
+      color: #fff;
+      border-color: transparent;
+      box-shadow: 0 8px 22px rgba(59, 130, 246, .28);
+    }
+    .news-meta {
+      color: var(--muted);
+      font-size: 14px;
+      margin-top: 8px;
+    }
+    .news-empty {
+      text-align: center;
+      color: var(--muted);
+      padding: 16px 0;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="nav container">
+      <a href="/" class="logo">Intensity Success</a>
+      <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+      <nav class="site-nav">
+        <a href="/#services">Services</a>
+        <a href="/#outcomes">Results</a>
+        <a href="/#faq">FAQ</a>
+        <a href="/blog/">Blog</a>
+        <a href="/videos/">Videos</a>
+        <a href="/news/" id="nav-news" class="active">AI News</a>
+        <a class="btn btn-primary" href="/#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- AI News -->
+  <section class="section alt">
+    <div class="container narrow">
+      <h1 style="text-align:center; margin-bottom:10px;">AI News</h1>
+      <p class="form-note" style="text-align:center;margin-bottom:24px;">
+        Curated headlines refreshed from major outlets. Filter by topic below.
+      </p>
+
+      <div class="filter-tabs" role="tablist" aria-label="AI news filters"></div>
+
+      <div id="news-feed" class="grid-3" aria-live="polite"></div>
+      <p id="news-more" class="form-note" style="text-align:center; margin-top:18px;"></p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>© <span id="y"></span> Intensity Success · All rights reserved.</p>
+      <div class="footer-links">
+        <a href="/privacy">Privacy</a>
+        <a href="/terms">Terms</a>
+        <a href="/blog/">Blog</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+  /* ---------- Base setup ---------- */
+  document.getElementById('y').textContent = new Date().getFullYear();
+  const toggle = document.querySelector('.menu-toggle');
+  const nav = document.querySelector('.site-nav');
+  if (toggle && nav) {
+    toggle.addEventListener('click', () => {
+      const open = nav.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  }
+  const onScroll = () => {
+    if (window.scrollY > 6) document.body.classList.add('scrolled');
+    else document.body.classList.remove('scrolled');
+  };
+  onScroll(); window.addEventListener('scroll', onScroll);
+
+  /* ---------- Filters + Feed ---------- */
+  const TABS = [
+    { key:'all',      label:'All',      q:'("artificial intelligence" OR AI)' },
+    { key:'research', label:'Research', q:'("AI research" OR "machine learning research" OR arXiv)' },
+    { key:'tools',    label:'Tools',    q:'("AI tools" OR "AI features" OR "AI productivity")' },
+    { key:'business', label:'Business', q:'("AI startup" OR "AI investment" OR "AI funding")' },
+    { key:'ethics',   label:'Ethics',   q:'("AI ethics" OR "AI safety" OR "AI regulation")' },
+    { key:'llms',     label:'LLMs',     q:'(GPT OR "GPT-4" OR "Claude" OR "Gemini" OR "Llama")' },
+  ];
+
+  const tabsWrap = document.querySelector('.filter-tabs');
+  const feed = document.getElementById('news-feed');
+  const moreEl = document.getElementById('news-more');
+  let activeKey = sessionStorage.getItem('aiNewsTab') || 'all';
+
+  TABS.forEach(tab => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'tab';
+    b.textContent = tab.label;
+    b.dataset.key = tab.key;
+    b.setAttribute('aria-pressed', tab.key === activeKey ? 'true' : 'false');
+    b.addEventListener('click', () => {
+      if (activeKey === tab.key) return;
+      document.querySelectorAll('.filter-tabs .tab').forEach(el => el.setAttribute('aria-pressed','false'));
+      b.setAttribute('aria-pressed','true');
+      activeKey = tab.key;
+      sessionStorage.setItem('aiNewsTab', activeKey);
+      loadNews();
+    });
+    tabsWrap.appendChild(b);
+  });
+
+  function skeletonCards(n=6){
+    feed.innerHTML = Array.from({length:n}).map(()=>`
+      <article class="card" style="min-height:140px; opacity:.7;">
+        <div class="form-note">Loading…</div>
+      </article>`).join('');
+    moreEl.textContent = '';
+  }
+
+  function googleNewsRssUrl(query){
+    const base = 'https://news.google.com/rss/search';
+    const params = new URLSearchParams({
+      q: query,
+      hl: 'en-US',
+      gl: 'US',
+      ceid: 'US:en'
+    });
+    return `${base}?${params.toString()}`;
+  }
+
+  async function loadNews(){
+    skeletonCards();
+    const tab = TABS.find(t => t.key === activeKey) || TABS[0];
+    const rssUrl = googleNewsRssUrl(tab.q);
+    const rss2json = 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(rssUrl);
+
+    try {
+      const res = await fetch(rss2json, { cache: 'no-store' });
+      if (!res.ok) throw new Error('feed error');
+      const data = await res.json();
+      const items = (data.items || []).slice(0, 9);
+
+      if (!items.length) {
+        feed.innerHTML = `<p class="news-empty">No stories right now. Try another filter.</p>`;
+        return;
+      }
+
+      feed.innerHTML = items.map(item => {
+        const clean = (item.description || '').replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').trim();
+        const blurb = clean.length > 160 ? clean.slice(0,160)+'…' : clean;
+        const date = new Date(item.pubDate || Date.now()).toLocaleDateString();
+        return `
+          <article class="card reveal">
+            <a href="${item.link}" target="_blank" rel="noopener" style="text-decoration:none; color:inherit;">
+              <h3>${item.title}</h3>
+              <p>${blurb || 'Latest update in AI.'}</p>
+              <p class="news-meta">${date}</p>
+            </a>
+          </article>`;
+      }).join('');
+
+      const gnLink = 'https://news.google.com/search?q=' + encodeURIComponent(tab.q) + '&hl=en-US&gl=US&ceid=US:en';
+      moreEl.innerHTML = `<a class="btn" href="${gnLink}" target="_blank" rel="noopener">More ${tab.label} news →</a>`;
+
+    } catch (err) {
+      console.error(err);
+      feed.innerHTML = `<p class="news-empty">Couldn’t load news right now. Please refresh.</p>`;
+      moreEl.textContent = '';
+    }
+  }
+
+  loadNews();
+  </script>
+</body>
+</html>
