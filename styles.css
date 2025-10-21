@@ -84,7 +84,40 @@
     color: rgba(230,238,252,.6);
   }
   #contact .form-note { color: var(--muted); }
+/* ---- Contact form layout fix ---- */
+.contact{
+  display: grid;
+  grid-template-columns: 1fr;   /* stack by default */
+  gap: 16px;
+  align-items: start;
+}
 
+/* inputs should fill their label width */
+.contact input,
+.contact textarea{
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Desktop/tablet: name + email side-by-side, textarea full width, button on its own row */
+@media (min-width: 900px){
+  .contact{
+    grid-template-columns: 1fr 1fr;
+  }
+  .contact label:nth-of-type(3){   /* the textarea label */
+    grid-column: 1 / -1;           /* span both columns */
+  }
+  .contact button[type="submit"]{
+    grid-column: 1 / -1;           /* put button on its own row */
+    width: max-content;
+  }
+  .form-note{
+    grid-column: 1 / -1;           /* note spans full width too */
+  }
+}
+
+/* Make sure Safari doesn't override button look */
+button.btn { -webkit-appearance: none; appearance: none; border: none; }
   /* Footer */
   .site-footer {
     background: #0e1728;
