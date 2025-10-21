@@ -111,7 +111,11 @@
       blogLink.classList.remove('active');
     }
   }
-
+// Highlight Videos nav when in /videos
+const videosLink = document.getElementById('nav-videos');
+if (videosLink && window.location.pathname.includes('/videos')) {
+  videosLink.classList.add('active');
+}
   /* ...your existing code below... */
 })();
 </script>
