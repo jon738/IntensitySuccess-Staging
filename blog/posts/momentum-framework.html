@@ -2,35 +2,34 @@
 <html lang="en">
 <head>
   <script>
-  (function () {
-    // If hosted under a project path on GitHub Pages, set that as the base.
-    // Otherwise default to '/'
-    var projectPath = '/IntensitySuccess-Staging/';   // ← your staging repo path
-    var base = location.pathname.startsWith(projectPath) ? projectPath : '/';
-    var baseEl = document.createElement('base');
-    baseEl.setAttribute('href', base);
-    document.head.prepend(baseEl);
-  })();
-</script>
+    (function () {
+      // Handle GitHub Pages subpath (staging) vs production root
+      var projectPath = '/IntensitySuccess-Staging/';
+      var base = location.pathname.startsWith(projectPath) ? projectPath : '/';
+      var baseEl = document.createElement('base');
+      baseEl.setAttribute('href', base);
+      document.head.prepend(baseEl);
+    })();
+  </script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>The Momentum Framework — Intensity Success</title>
   <meta name="description" content="A simple system to turn starts into streaks, and streaks into results." />
-  <!-- from /blog/posts back to the root stylesheet -->
- <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
   <!-- Header -->
   <header class="site-header">
     <div class="nav container">
-      <a href="/" class="logo">Intensity Success</a>
+      <a href="index.html" class="logo">Intensity Success</a>
       <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
       <nav class="site-nav">
-        <a href="/#services">Services</a>
-        <a href="/#outcomes">Results</a>
-        <a href="/#faq">FAQ</a>
+        <a href="index.html#services">Services</a>
+        <a href="index.html#outcomes">Results</a>
+        <a href="index.html#faq">FAQ</a>
         <a href="blog/" id="nav-blog" class="active">Blog</a>
-        <a class="btn btn-primary" href="/#contact">Contact</a>
+        <a class="btn btn-primary" href="index.html#contact">Contact</a>
       </nav>
     </div>
   </header>
@@ -38,14 +37,17 @@
   <!-- Article -->
   <article class="section alt">
     <div class="container narrow">
-      <p class="form-note" style="margin:0 0 8px;"><a href="/blog/">&larr; Back to Blog</a></p>
+      <p class="form-note" style="margin:0 0 8px;">
+        <a href="blog/">&larr; Back to Blog</a>
+      </p>
+
       <h1 style="text-align:center; margin-bottom:10px;">The Momentum Framework</h1>
       <p class="form-note" style="text-align:center; margin:0 0 32px;">
         Read time: ~5 min · Posted <time datetime="2025-10-21">Oct 21, 2025</time>
       </p>
 
       <div style="max-width:760px; margin:0 auto; line-height:1.8; color:var(--text);">
-        <p>Momentum is a design choice. If you can reliably create a clean start, a clear next step, and a quick win, you’ll move—even on low-motivation days. The Momentum Framework compresses that into three loops you can run daily.</p>
+        <p>Momentum is a design choice. If you can reliably create a clean start, a clear next step, and a quick win, you’ll move — even on low-motivation days. The Momentum Framework compresses that into three loops you can run daily.</p>
 
         <h2>Loop 1 — Start Clean</h2>
         <ul>
@@ -85,7 +87,7 @@ Next Breadcrumb (when stopping): __
 [ ] Close loops + set first step
         </pre>
 
-        <p style="margin-top:28px;">Run the three loops. Momentum compounds because starts get easier, wins come faster, and your system—not your mood—drives the day.</p>
+        <p style="margin-top:28px;">Run the three loops. Momentum compounds because starts get easier, wins come faster, and your system — not your mood — drives the day.</p>
       </div>
     </div>
   </article>
@@ -95,9 +97,9 @@ Next Breadcrumb (when stopping): __
     <div class="footer-inner">
       <p>© <span id="y"></span> Intensity Success · All rights reserved.</p>
       <div class="footer-links">
-        <a href="/privacy">Privacy</a>
-        <a href="/terms">Terms</a>
-        <a href="/blog/">Blog</a>
+        <a href="privacy">Privacy</a>
+        <a href="terms">Terms</a>
+        <a href="blog/">Blog</a>
       </div>
     </div>
   </footer>
@@ -114,13 +116,13 @@ Next Breadcrumb (when stopping): __
     const y = document.getElementById('y');
     if (y) y.textContent = new Date().getFullYear();
 
-    // Mobile menu
+    // Mobile menu toggle
     const toggle = document.querySelector('.menu-toggle');
     const nav = document.querySelector('.site-nav');
     if (toggle && nav) {
       toggle.addEventListener('click', () => {
         const open = nav.classList.toggle('open');
-        toggle.setAttribute('aria-expanded', open);
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
       });
     }
 
