@@ -1,0 +1,33 @@
+<!-- /includes/footer.html -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p>© <span id="footer-year"></span> Intensity Success · All rights reserved.</p>
+    <div class="footer-links">
+      <a href="privacy">Privacy</a>
+      <a href="terms">Terms</a>
+      <a href="blog/">Blog</a>
+      <a href="/videos/">Videos</a>
+      <a href="/news/">News</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  // Support GitHub Pages subpath
+  var projectPath = '/IntensitySuccess-Staging/';
+  var prefix = location.pathname.startsWith(projectPath) ? projectPath : '/';
+
+  // Fix all footer link hrefs for staging
+  document.querySelectorAll('.footer-links a').forEach(a => {
+    const href = a.getAttribute('href');
+    if (href && href.startsWith('/') && prefix !== '/') {
+      a.setAttribute('href', prefix + href.slice(1));
+    }
+  });
+
+  // Set current year dynamically
+  const year = document.getElementById('footer-year');
+  if (year) year.textContent = new Date().getFullYear();
+})();
+</script>
