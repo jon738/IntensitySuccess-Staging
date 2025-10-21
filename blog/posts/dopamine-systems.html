@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dopamine, Systems, and Sustainable Motivation — Intensity Success</title>
+  <meta name="description" content="Use dopamine wisely: build systems that make progress obvious, reduce friction, and keep you moving without burnout." />
+  <!-- from /blog/posts/ back to root stylesheet -->
+  <link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="nav container">
+      <a href="/" class="logo">Intensity Success</a>
+      <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+      <nav class="site-nav">
+        <a href="/#services">Services</a>
+        <a href="/#outcomes">Results</a>
+        <a href="/#faq">FAQ</a>
+        <a href="/blog/" id="nav-blog" class="active">Blog</a>
+        <a class="btn btn-primary" href="/#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Article -->
+  <article class="section alt">
+    <div class="container narrow">
+      <p class="form-note" style="margin:0 0 8px;"><a href="/blog/">&larr; Back to Blog</a></p>
+      <h1 style="text-align:center; margin-bottom:10px;">Dopamine, Systems, and Sustainable Motivation</h1>
+      <p class="form-note" style="text-align:center; margin:0 0 32px;">
+        Read time: ~6 min · Posted <time datetime="2025-10-21">Oct 21, 2025</time>
+      </p>
+
+      <div style="max-width:760px; margin:0 auto; line-height:1.8; color:var(--text);">
+        <p>Dopamine gets framed as the villain behind distraction — but it’s really a <em>signal</em>. It’s your system’s way of predicting reward and nudging you toward behaviors that historically paid off. If we don’t design the workflow, novelty will do it for us.</p>
+
+        <blockquote style="margin:28px 0; padding:22px 26px; border-left:4px solid var(--brand); background:var(--panel); border-radius:var(--radius-sm); color:var(--muted);">
+          <p style="margin:0;">You don’t need to fight dopamine — you need to <strong>aim</strong> it.</p>
+        </blockquote>
+
+        <h2>1) Make Progress Visually Obvious</h2>
+        <p>Your brain loves visible completion. Convert invisible work into visible units:</p>
+        <ul>
+          <li><strong>Kanban in 3 lanes:</strong> Backlog → Doing → Done. Keep WIP to 1–2 items.</li>
+          <li><strong>Atomic tasks:</strong> write outcomes like “Draft intro (150 words)” not “Write blog post.”</li>
+          <li><strong>Daily scorecard:</strong> 3 checkboxes that, if done, count as a win.</li>
+        </ul>
+
+        <h2>2) Reduce Friction at the Start Line</h2>
+        <p>Dopamine spikes at “go.” Make “go” trivial:</p>
+        <ul>
+          <li><strong>One-click work session:</strong> a bookmark that opens your doc, reference, and timer.</li>
+          <li><strong>Starter prompt:</strong> keep a template at the top of each project: “Today I will… The first keystroke is…”</li>
+          <li><strong>Environment preset:</strong> focus playlist, full-screen, notifications off.</li>
+        </ul>
+
+        <h2>3) Reward the Right Thing</h2>
+        <p>If you only reward outcomes, you’ll procrastinate until it’s perfect. Reward <em>sessions</em> and <em>submissions</em>:</p>
+        <ul>
+          <li>Count a 25-minute deep-work block as a success — regardless of perfection.</li>
+          <li>Celebrate <em>drafts sent</em>, not just drafts finished.</li>
+        </ul>
+
+        <h2>4) Close Open Loops Daily</h2>
+        <p>Unclosed loops drain attention and hijack dopamine. End-of-day reset:</p>
+        <ol>
+          <li>Move every “Doing” card to either Done or Backlog with a next step.</li>
+          <li>Write a 2-line log: “What moved?” and “What’s first tomorrow?”</li>
+          <li>Leave a breadcrumb in the doc: <em>“Next: write 3 bullets on X.”</em></li>
+        </ol>
+
+        <h2>5) Design Your Cold-Start Ritual</h2>
+        <p>When you feel scattered, use a reliable boot sequence:</p>
+        <ul>
+          <li><strong>2-min unload:</strong> brain-dump everything onto a scratch pad.</li>
+          <li><strong>Circle three:</strong> pick the one task that makes others easier.</li>
+          <li><strong>Start tiny:</strong> commit to 5 minutes. Momentum will take it from there.</li>
+        </ul>
+
+        <h3>Copy-Paste System (Try This Week)</h3>
+        <pre style="background:var(--panel); padding:16px 18px; border-radius:12px; overflow:auto; border:1px solid rgba(0,0,0,.08);">
+Daily Scorecard
+[ ] 2 deep-work blocks (25m)
+[ ] 1 delivery (draft, email, ticket)
+[ ] Close loops + write tomorrow's first step
+        </pre>
+
+        <p style="margin-top:32px;">Aim your dopamine at the system: clear starts, visible progress, and small wins that stack. Do that, and motivation becomes a byproduct of design — not a mood you have to wait for.</p>
+      </div>
+    </div>
+  </article>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>© <span id="y"></span> Intensity Success · All rights reserved.</p>
+      <div class="footer-links">
+        <a href="/privacy">Privacy</a>
+        <a href="/terms">Terms</a>
+        <a href="/blog/">Blog</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JS -->
+  <script>
+    // Highlight blog nav
+    const path = window.location.pathname;
+    if (path.includes('/blog')) {
+      const blogLink = document.getElementById('nav-blog');
+      if (blogLink) blogLink.classList.add('active');
+    }
+
+    // Footer year
+    const y = document.getElementById('y');
+    if (y) y.textContent = new Date().getFullYear();
+
+    // Mobile menu
+    const toggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('.site-nav');
+    if (toggle && nav) {
+      toggle.addEventListener('click', () => {
+        const open = nav.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', open);
+      });
+    }
+
+    // Header scrolled state
+    const onScroll = () => {
+      if (window.scrollY > 6) document.body.classList.add('scrolled');
+      else document.body.classList.remove('scrolled');
+    };
+    window.addEventListener('scroll', onScroll);
+    onScroll();
+  </script>
+</body>
+</html>
