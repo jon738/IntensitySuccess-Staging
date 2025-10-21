@@ -34,6 +34,27 @@
     <style>.reveal { opacity: 1 !important; transform: none !important; }</style>
   </noscript>
 </head>
+  <script>
+(async () => {
+  try {
+    const res = await fetch('/includes/header.html');
+    const html = await res.text();
+    document.getElementById('site-header').innerHTML = html;
+
+    // Optional: Activate nav toggle after insertion
+    const toggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('.site-nav');
+    if (toggle && nav) {
+      toggle.addEventListener('click', () => {
+        const open = nav.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+    }
+  } catch (err) {
+    console.error('Header load failed:', err);
+  }
+})();
+</script>
 <body>
 <div id="site-header"></div>
 
