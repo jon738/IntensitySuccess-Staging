@@ -2,16 +2,15 @@
 <html lang="en">
 <head>
   <script>
-  (function () {
-    // If hosted under a project path on GitHub Pages, set that as the base.
-    // Otherwise default to '/'
-    var projectPath = '/IntensitySuccess-Staging/';   // ← your staging repo path
-    var base = location.pathname.startsWith(projectPath) ? projectPath : '/';
-    var baseEl = document.createElement('base');
-    baseEl.setAttribute('href', base);
-    document.head.prepend(baseEl);
-  })();
-</script>
+    (function () {
+      // Handle GitHub Pages subpath (staging) vs production root
+      var projectPath = '/IntensitySuccess-Staging/';
+      var base = location.pathname.startsWith(projectPath) ? projectPath : '/';
+      var baseEl = document.createElement('base');
+      baseEl.setAttribute('href', base);
+      document.head.prepend(baseEl);
+    })();
+  </script>
   <meta name="theme-color" content="#f4f6fa" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#0b1220" media="(prefers-color-scheme: dark)">
   <meta charset="utf-8" />
@@ -29,28 +28,27 @@
   <meta name="twitter:card" content="summary_large_image" />
 
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css" />
+  <!-- Correct stylesheet name -->
+  <link rel="stylesheet" href="style.css" />
   <noscript>
-  <style>
-    .reveal { opacity: 1 !important; transform: none !important; }
-  </style>
-</noscript>
+    <style>.reveal { opacity: 1 !important; transform: none !important; }</style>
+  </noscript>
 </head>
 <body>
   <!-- Header -->
- <header class="site-header">
-  <div class="container nav">
-    <a class="logo" href="/">Intensity Success</a>
-    <nav class="site-nav">
-      <a href="#services">Services</a>
-      <a href="#outcomes">Results</a>
-      <a href="#faq">FAQ</a>
-      <a href="blog/" id="nav-blog">Blog</a>
-      <a class="btn btn-primary" href="#contact">Contact</a>
-    
-    <button class="menu-toggle" aria-label="Menu">☰</button>
-  </div>
-</header>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="logo" href="index.html">Intensity Success</a>
+      <nav class="site-nav">
+        <a href="#services">Services</a>
+        <a href="#outcomes">Results</a>
+        <a href="#faq">FAQ</a>
+        <a href="blog/" id="nav-blog">Blog</a>
+        <a class="btn btn-primary" href="#contact">Contact</a>
+      </nav>
+      <button class="menu-toggle" aria-label="Menu" aria-expanded="false">☰</button>
+    </div>
+  </header>
 
   <main>
     <!-- HERO -->
@@ -105,7 +103,7 @@
             <p>Deep-dive session + a clear 90-day roadmap covering goals, metrics, and the highest-leverage actions. Includes a one-page plan and execution cadence.</p>
           </article>
 
-          <article class="card reveal">
+        <article class="card reveal">
             <h3>🤖 Systems & AI Automation</h3>
             <p>Streamline workflows with AI: research, drafting, CRM updates, inbox triage, and repeatable playbooks so you stop drowning in busywork.</p>
           </article>
@@ -118,32 +116,32 @@
       </div>
     </section>
 
-  <!-- Outcomes / Proof (KPIs) -->
-<section id="outcomes" class="section">
-  <div class="container">
-    <div class="narrow section-intro">
-      <h2>Results you can measure in 90 days</h2>
-      <p>Clear, trackable improvements — not vague inspiration.</p>
-    </div>
+    <!-- Outcomes / Proof (KPIs) -->
+    <section id="outcomes" class="section">
+      <div class="container">
+        <div class="narrow section-intro">
+          <h2>Results you can measure in 90 days</h2>
+          <p>Clear, trackable improvements — not vague inspiration.</p>
+        </div>
 
-    <div class="grid-3">
-      <article class="card kpi reveal">
-        <h3><span class="kpi-number" data-target="35" data-suffix="%">0%</span></h3>
-        <p>Avg. increase in deep-work hours per week</p>
-      </article>
+        <div class="grid-3">
+          <article class="card kpi reveal">
+            <h3><span class="kpi-number" data-target="35" data-suffix="%">0%</span></h3>
+            <p>Avg. increase in deep-work hours per week</p>
+          </article>
 
-      <article class="card kpi reveal">
-        <h3><span class="kpi-number" data-target="28" data-suffix="%">0%</span></h3>
-        <p>Reduction in low-value tasks via lightweight automation</p>
-      </article>
+          <article class="card kpi reveal">
+            <h3><span class="kpi-number" data-target="28" data-suffix="%">0%</span></h3>
+            <p>Reduction in low-value tasks via lightweight automation</p>
+          </article>
 
-      <article class="card kpi reveal">
-        <h3><span class="kpi-number" data-target="3" data-suffix="×">0×</span></h3>
-        <p>More consistent shipping cadence</p>
-      </article>
-    </div>
-  </div>
-</section>
+          <article class="card kpi reveal">
+            <h3><span class="kpi-number" data-target="3" data-suffix="×">0×</span></h3>
+            <p>More consistent shipping cadence</p>
+          </article>
+        </div>
+      </div>
+    </section>
 
     <!-- FAQ (moved before Contact) -->
     <section id="faq" class="section alt">
@@ -172,97 +170,52 @@
       </div>
     </section>
 
- <!-- Contact (after FAQ now) -->
-<section id="contact" class="section">
-  <div class="container narrow">
-    <h2>Contact</h2>
-    <p class="form-note" style="margin-bottom:12px;">
-      Tell me a bit about your goals and timeline. I’ll reply with next steps and a link to book a call.
-    </p>
+    <!-- Contact (after FAQ now) -->
+    <section id="contact" class="section">
+      <div class="container narrow">
+        <h2>Contact</h2>
+        <p class="form-note" style="margin-bottom:12px;">
+          Tell me a bit about your goals and timeline. I’ll reply with next steps and a link to book a call.
+        </p>
 
-    <!-- ✅ Formspree-connected version -->
-    <form id="contact-form"
-          class="contact"
-          action="https://formspree.io/f/xqayolvj"
-          method="POST"
-          novalidate>
+        <!-- Formspree-connected -->
+        <form id="contact-form"
+              class="contact"
+              action="https://formspree.io/f/xqayolvj"
+              method="POST"
+              novalidate>
+          <label for="name">
+            <span>Name</span>
+            <input id="name" name="name" type="text" autocomplete="name" required />
+          </label>
 
-      <!-- Name -->
-      <label for="name">
-        <span>Name</span>
-        <input id="name" name="name" type="text" autocomplete="name" required />
-      </label>
+          <label for="email">
+            <span>Email</span>
+            <input id="email" name="email" type="email" autocomplete="email" required />
+          </label>
 
-      <!-- Email -->
-      <label for="email">
-        <span>Email</span>
-        <input id="email" name="email" type="email" autocomplete="email" required />
-      </label>
+          <label for="message">
+            <span>What are you trying to achieve in the next 90 days?</span>
+            <textarea id="message" name="message" required></textarea>
+          </label>
 
-      <!-- Message -->
-      <label for="message">
-        <span>What are you trying to achieve in the next 90 days?</span>
-        <textarea id="message" name="message" required></textarea>
-      </label>
+          <input type="hidden" name="_subject" value="Discovery Call Request (Intensity Success)" />
+          <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="position:absolute;left:-5000px;opacity:0;" aria-hidden="true" />
 
-      <!-- Hidden extras -->
-      <input type="hidden" name="_subject" value="Discovery Call Request (Intensity Success)" />
-      <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="position:absolute;left:-5000px;opacity:0;" aria-hidden="true" />
+          <button type="submit" class="btn btn-primary">Request Discovery Call</button>
 
-      <!-- Submit -->
-      <button type="submit" class="btn btn-primary">Request Discovery Call</button>
+          <p id="form-status" class="form-note" role="status" aria-live="polite" style="min-height:1.2em;"></p>
 
-      <!-- Inline status text -->
-      <p id="form-status" class="form-note" role="status" aria-live="polite" style="min-height:1.2em;"></p>
+          <p class="form-note">
+            Prefer email?
+            <a href="mailto:hello@intensitysuccess.com?subject=Discovery%20Call%20Request&body=Hi%20Intensity%20Success%2C%0A%0AMy%20name%20is%20%5BYour%20Name%5D.%0ACompany%20(optional)%3A%20%5BYour%20Company%5D%0A%0AHere%E2%80%99s%20what%20I%E2%80%99m%20trying%20to%20achieve%20in%20the%20next%2090%20days%3A%0A%5BGoals%20and%20timeline%5D%0A%0AThanks!">
+              hello@intensitysuccess.com
+            </a>
+          </p>
+        </form>
+      </div>
+    </section>
 
-      <!-- Email fallback -->
-      <p class="form-note">
-        Prefer email? 
-        <a href="mailto:hello@intensitysuccess.com?subject=Discovery%20Call%20Request&body=Hi%20Intensity%20Success%2C%0A%0AMy%20name%20is%20%5BYour%20Name%5D.%0ACompany%20(optional)%3A%20%5BYour%20Company%5D%0A%0AHere%E2%80%99s%20what%20I%E2%80%99m%20trying%20to%20achieve%20in%20the%20next%2090%20days%3A%0A%5BGoals%20and%20timeline%5D%0A%0AThanks!">
-          hello@intensitysuccess.com
-        </a>
-      </p>
-    </form>
-  </div>
-</section>
-<script>
-  // Assumes your form has id="contact-form" and fields with the below IDs
-  document.addEventListener('DOMContentLoaded', function () {
-    const form   = document.getElementById('contact-form');
-    const nameEl = document.getElementById('name');
-    const mailEl = document.getElementById('email');
-    const msgEl  = document.getElementById('message');
-
-    if (!form) return;
-
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-
-      const name = (nameEl?.value || '').trim();
-      const from = (mailEl?.value || '').trim();
-      const msg  = (msgEl?.value || '').trim();
-
-      const subject = `Discovery Call Request${name ? ` — ${name}` : ''}`;
-      const bodyLines = [
-        `Hi Intensity Success,`,
-        ``,
-        name ? `My name is ${name}.` : `My name is __________________.`,
-        from ? `My email is ${from}.` : `My email is __________________.`,
-        ``,
-        `Here’s what I’m trying to achieve in the next 90 days:`,
-        msg || `__________________`,
-        ``,
-        `Thanks!`
-      ];
-
-      const mailto = `mailto:hello@intensitysuccess.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyLines.join('\n'))}`;
-
-      // Open the user's email client with the pre-filled message
-      window.location.href = mailto;
-    });
-  });
-</script>
-   
     <!-- About (moved to bottom) -->
     <section id="about" class="section alt">
       <div class="container narrow">
@@ -280,142 +233,142 @@
     </section>
   </main>
 
-<!-- Footer -->
-<footer class="site-footer">
-  <div class="footer-inner">
-    <p>© <span id="y"></span> Intensity Success · All rights reserved.</p>
-    <div class="footer-links">
-      <a href="/privacy">Privacy</a>
-      <a href="/terms">Terms</a>
-      <a href="/blog/">Blog</a>
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>© <span id="y"></span> Intensity Success · All rights reserved.</p>
+      <div class="footer-links">
+        <a href="privacy">Privacy</a>
+        <a href="terms">Terms</a>
+        <a href="blog/">Blog</a>
+      </div>
     </div>
-  </div>
-</footer>
+  </footer>
 
-<!-- Scripts: keep everything inside ONE script tag -->
-<script>
-(function () {
-  /* --- Footer year --- */
-  const yEl = document.getElementById('y');
-  if (yEl) yEl.textContent = new Date().getFullYear();
+  <!-- Scripts -->
+  <script>
+  (function () {
+    /* Footer year */
+    const yEl = document.getElementById('y');
+    if (yEl) yEl.textContent = new Date().getFullYear();
 
-  /* --- Blog nav highlight --- */
-  if (window.location.pathname.startsWith('/blog')) {
-    const blogLink = document.getElementById('nav-blog');
-    if (blogLink) blogLink.classList.add('active');
-  }
+    /* Blog nav highlight */
+    if (window.location.pathname.includes('/blog')) {
+      const blogLink = document.getElementById('nav-blog');
+      if (blogLink) blogLink.classList.add('active');
+    }
 
-  /* --- Mobile menu --- */
-  const toggle = document.querySelector('.menu-toggle');
-  const nav = document.querySelector('.site-nav');
-  if (toggle && nav) {
-    toggle.addEventListener('click', () => {
-      const open = nav.classList.toggle('open');
-      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-    });
-  }
+    /* Mobile menu */
+    const toggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('.site-nav');
+    if (toggle && nav) {
+      toggle.addEventListener('click', () => {
+        const open = nav.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+    }
 
-  /* --- Header scrolled state --- */
-  const onScroll = () => {
-    if (window.scrollY > 6) document.body.classList.add('scrolled');
-    else document.body.classList.remove('scrolled');
-  };
-  onScroll();
-  window.addEventListener('scroll', onScroll);
+    /* Header scrolled state */
+    const onScroll = () => {
+      if (window.scrollY > 6) document.body.classList.add('scrolled');
+      else document.body.classList.remove('scrolled');
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll);
 
-  /* --- Reveal-on-scroll (.reveal -> .show) --- */
-  const revealEls = document.querySelectorAll('.reveal');
-  if (revealEls.length) {
-    if ('IntersectionObserver' in window) {
-      const io = new IntersectionObserver((entries) => {
+    /* Reveal-on-scroll */
+    const revealEls = document.querySelectorAll('.reveal');
+    if (revealEls.length) {
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach((en) => {
+            if (en.isIntersecting) {
+              en.target.classList.add('show');
+              io.unobserve(en.target);
+            }
+          });
+        }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+        revealEls.forEach((el) => io.observe(el));
+      } else {
+        revealEls.forEach((el) => el.classList.add('show'));
+      }
+    }
+
+    /* KPI counters */
+    const decimalsOf = (n) => {
+      const s = String(n);
+      return (s.split('.')[1] || '').length;
+    };
+    const startCounters = (root = document) => {
+      root.querySelectorAll('.kpi-number').forEach((el) => {
+        if (el.dataset.animated === 'true') return;
+        el.dataset.animated = 'true';
+
+        const initial = el.textContent.trim();
+        const m = initial.match(/^(\D*)(-?\d+(?:\.\d+)?)(.*)$/);
+        const prefix = el.dataset.prefix ?? (m ? m[1] : '');
+        const suffix = el.dataset.suffix ?? (m ? m[3] : '');
+        const target = Number(el.dataset.target ?? (m ? m[2] : 0)) || 0;
+        const precision = decimalsOf(el.dataset.target ?? target);
+
+        const frames = 60;
+        const step = target / frames || 1;
+        let val = m && m[2] ? Number(m[2]) || 0 : 0;
+
+        const tick = () => {
+          val += step;
+          const done = step >= 0 ? val >= target : val <= target;
+          const shown = done ? target : val;
+          const formatted = precision ? shown.toFixed(precision) : Math.round(shown).toString();
+          el.textContent = `${prefix}${formatted}${suffix}`;
+          if (!done) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      });
+    };
+    const outcomes = document.getElementById('outcomes');
+    if (outcomes && 'IntersectionObserver' in window) {
+      const io2 = new IntersectionObserver((entries) => {
         entries.forEach((en) => {
           if (en.isIntersecting) {
-            en.target.classList.add('show');
-            io.unobserve(en.target);
+            startCounters(outcomes);
+            io2.disconnect();
           }
         });
-      }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
-      revealEls.forEach((el) => io.observe(el));
+      }, { threshold: 0.25 });
+      io2.observe(outcomes);
     } else {
-      revealEls.forEach((el) => el.classList.add('show'));
+      startCounters();
     }
-  }
 
-  /* --- KPI counters (keep symbols) --- */
-  const decimalsOf = (n) => {
-    const s = String(n);
-    return (s.split('.')[1] || '').length;
-  };
-  const startCounters = (root = document) => {
-    root.querySelectorAll('.kpi-number').forEach((el) => {
-      if (el.dataset.animated === 'true') return;
-      el.dataset.animated = 'true';
-
-      const initial = el.textContent.trim();
-      const m = initial.match(/^(\D*)(-?\d+(?:\.\d+)?)(.*)$/);
-      const prefix = el.dataset.prefix ?? (m ? m[1] : '');
-      const suffix = el.dataset.suffix ?? (m ? m[3] : '');
-      const target = Number(el.dataset.target ?? (m ? m[2] : 0)) || 0;
-      const precision = decimalsOf(el.dataset.target ?? target);
-
-      const frames = 60;               // ~1s
-      const step = target / frames || 1;
-      let val = m && m[2] ? Number(m[2]) || 0 : 0;
-
-      const tick = () => {
-        val += step;
-        const done = step >= 0 ? val >= target : val <= target;
-        const shown = done ? target : val;
-        const formatted = precision ? shown.toFixed(precision) : Math.round(shown).toString();
-        el.textContent = `${prefix}${formatted}${suffix}`;
-        if (!done) requestAnimationFrame(tick);
-      };
-      requestAnimationFrame(tick);
-    });
-  };
-  const outcomes = document.getElementById('outcomes');
-  if (outcomes && 'IntersectionObserver' in window) {
-    const io2 = new IntersectionObserver((entries) => {
-      entries.forEach((en) => {
-        if (en.isIntersecting) {
-          startCounters(outcomes);
-          io2.disconnect();
+    /* Formspree async submit */
+    const form   = document.getElementById('contact-form');
+    const status = document.getElementById('form-status');
+    if (form && status) {
+      const okMsg  = "Thanks! I’ll reply with next steps shortly.";
+      const errMsg = "Something went wrong. Please try again, or email hello@intensitysuccess.com.";
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        status.textContent = "Sending…";
+        try {
+          const res = await fetch(form.action, {
+            method: form.method,
+            body: new FormData(form),
+            headers: { 'Accept': 'application/json' }
+          });
+          if (res.ok) { form.reset(); status.textContent = okMsg; }
+          else {
+            const json = await res.json().catch(() => null);
+            status.textContent = json && json.errors
+              ? json.errors.map(e => e.message).join(" ")
+              : errMsg;
+          }
+        } catch {
+          status.textContent = errMsg;
         }
       });
-    }, { threshold: 0.25 });
-    io2.observe(outcomes);
-  } else {
-    startCounters();
-  }
-
-  /* --- Formspree async submit (requires #contact-form & #form-status) --- */
-  const form   = document.getElementById('contact-form');
-  const status = document.getElementById('form-status');
-  if (form && status) {
-    const okMsg  = "Thanks! I’ll reply with next steps shortly.";
-    const errMsg = "Something went wrong. Please try again, or email hello@intensitysuccess.com.";
-    form.addEventListener('submit', async function (e) {
-      e.preventDefault();
-      status.textContent = "Sending…";
-      try {
-        const res = await fetch(form.action, {
-          method: form.method,
-          body: new FormData(form),
-          headers: { 'Accept': 'application/json' }
-        });
-        if (res.ok) { form.reset(); status.textContent = okMsg; }
-        else {
-          const json = await res.json().catch(() => null);
-          status.textContent = json && json.errors
-            ? json.errors.map(e => e.message).join(" ")
-            : errMsg;
-        }
-      } catch {
-        status.textContent = errMsg;
-      }
-    });
-  }
-})();
-</script>
+    }
+  })();
+  </script>
 </body>
 </html>
