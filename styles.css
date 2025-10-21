@@ -478,7 +478,29 @@ body.scrolled .site-header{
   .ai-visual{ height:300px; }
   .ai-brain{ width:96%; }
 }
+/* ===== Theme normalization (ensures sections follow --bg / --panel) ===== */
+.section.alt,
+#about { background: var(--panel) !important; }
 
+#contact,
+.site-footer { background: var(--bg) !important; }
+
+/* Make non-card section pieces follow the theme too */
+#faq details.faq,
+#process .process li,
+.card,
+.card.quote {
+  background: var(--panel);
+  color: var(--text);
+}
+
+/* Optional: slightly darker footer in dark mode for contrast */
+@media (prefers-color-scheme: dark){
+  .site-footer{
+    background:#0e1728 !important;
+    border-top-color:rgba(255,255,255,.10);
+  }
+}
 /* ====================================
    Motion accessibility
 ==================================== */
