@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>How to Reset Focus When You Feel Scattered — Intensity Success</title>
+  <meta name="description" content="A simple 3-step method to clear mental clutter and regain focus in under 10 minutes." />
+  <link rel="stylesheet" href="/IntensitySuccess-Staging/styles.css">
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="nav container">
+      <a href="/" class="logo">Intensity Success</a>
+      <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+      <nav class="site-nav">
+        <a href="/#services">Services</a>
+        <a href="/#outcomes">Results</a>
+        <a href="/#faq">FAQ</a>
+        <a href="/blog/" id="nav-blog" class="active">Blog</a>
+        <a class="btn btn-primary" href="/#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Blog Article -->
+  <article class="section alt">
+    <div class="container narrow">
+      <h1 style="text-align:center; margin-bottom:12px;">How to Reset Focus When You Feel Scattered</h1>
+      <p class="form-note" style="text-align:center; margin-bottom:36px;">
+        A simple 3-step reset to calm your mind, clarify priorities, and get back into flow — fast.
+      </p>
+
+      <div style="max-width:700px; margin:0 auto; line-height:1.8; color:var(--text);">
+        <p>We’ve all had those days — your mind jumps from one tab to another, your task list multiplies, and your attention span shrinks to seconds. The good news? Focus isn’t something you have to chase — it’s something you can reset.</p>
+
+        <h2>Step 1 — Interrupt the Cycle</h2>
+        <p>When you feel scattered, your brain is usually stuck in an open-loop pattern: too many unresolved tasks competing for space. The fastest way to interrupt that pattern is to <strong>step away for two minutes</strong>. Stand up. Breathe. Stretch. Then, when you return, write down everything that’s on your mind — no filtering, no structure. Just unload.</p>
+
+        <h2>Step 2 — Simplify the Signal</h2>
+        <p>Next, look at your list and ask: <em>What actually matters right now?</em> Circle the top one to three actions that will create momentum. Everything else becomes background noise for now. You’re not deleting it — you’re just moving it out of the spotlight so your brain can focus on what counts.</p>
+
+        <blockquote style="margin:28px 0; padding:22px 26px; border-left:4px solid var(--brand); background:var(--panel); border-radius:var(--radius-sm); color:var(--muted);">
+          <p style="margin:0;">“Focus is less about discipline and more about clarity.”</p>
+        </blockquote>
+
+        <h2>Step 3 — Re-enter With Intention</h2>
+        <p>Now that you’ve cleared mental clutter and identified priorities, set a short, defined window — say, <strong>25 minutes</strong> — and focus only on the first circled item. No multitasking. When the timer ends, take a short break and reassess.</p>
+
+        <p>This cycle trains your brain to associate focus with completion instead of overwhelm. The more you repeat it, the faster your mind recovers from chaos.</p>
+
+        <h3>Bonus — Use Environmental Cues</h3>
+        <p>Small cues can signal to your brain it’s time to focus: putting on specific music, lighting a candle, or even switching browser profiles. Over time, these cues create an automatic mental boundary between “open mode” and “execution mode.”</p>
+
+        <p style="margin-top:40px;">You don’t need more motivation — you need better recovery. Clarity and calm are what bring your intensity back online.</p>
+      </div>
+    </div>
+  </article>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>© <span id="y"></span> Intensity Success · All rights reserved.</p>
+      <div class="footer-links">
+        <a href="/privacy">Privacy</a>
+        <a href="/terms">Terms</a>
+        <a href="/blog/">Blog</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JS -->
+  <script>
+    // Highlight blog nav
+    const path = window.location.pathname;
+    if (path.includes('/blog')) {
+      const blogLink = document.getElementById('nav-blog');
+      if (blogLink) blogLink.classList.add('active');
+    }
+
+    // Footer year
+    const y = document.getElementById('y');
+    if (y) y.textContent = new Date().getFullYear();
+
+    // Mobile menu toggle
+    const toggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('.site-nav');
+    if (toggle && nav) {
+      toggle.addEventListener('click', () => {
+        const open = nav.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', open);
+      });
+    }
+
+    // Header scrolled state
+    const onScroll = () => {
+      if (window.scrollY > 6) document.body.classList.add('scrolled');
+      else document.body.classList.remove('scrolled');
+    };
+    window.addEventListener('scroll', onScroll);
+    onScroll();
+  </script>
+</body>
+</html>
