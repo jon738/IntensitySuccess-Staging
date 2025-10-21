@@ -37,6 +37,13 @@
       <a href="/blog/">Blog</a>
       <a class="btn btn-primary" href="#contact">Contact</a>
     </nav>
+    <nav class="site-nav">
+  <a href="#services">Services</a>
+  <a href="#outcomes">Results</a>
+  <a href="#faq">FAQ</a>
+  <a href="/blog/" class="nav-link" id="nav-blog">Blog</a>
+  <a class="btn btn-primary" href="#contact">Contact</a>
+</nav>
     <button class="menu-toggle" aria-label="Menu">☰</button>
   </div>
 </header>
@@ -418,6 +425,17 @@
     }
   });
 })();
+</script>
+  <script>
+  // Highlight "Blog" in header if URL path starts with /blog
+  const path = window.location.pathname;
+  if (path.startsWith('/blog')) {
+    const blogLink = document.getElementById('nav-blog');
+    if (blogLink) blogLink.classList.add('active');
+  }
+  // Preserve your footer year updater
+  const y = document.getElementById('y');
+  if (y) y.textContent = new Date().getFullYear();
 </script>
 </body>
 </html>
