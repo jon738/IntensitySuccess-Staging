@@ -806,4 +806,60 @@ input[type="submit"].btn.btn-primary:hover {
     background: linear-gradient(180deg, #ffffff 0%, #f5f8ff 100%);
     box-shadow: var(--faq-shadow);
   }
+/* ===== Blog cards ===== */
+.post-card {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow: hidden;
 }
+.post-card .post-cover { display:block; aspect-ratio: 16/9; background: linear-gradient(180deg, rgba(59,130,246,.10), transparent); }
+.post-card .post-cover img { width:100%; height:100%; object-fit: cover; }
+.post-card .post-body { padding: 22px; }
+.post-card .post-title {
+  display:block; text-decoration:none; font-weight: 800; color: var(--brand-2);
+  font-size: clamp(18px, 2.2vw, 22px); margin: 0 0 8px;
+}
+.post-card .post-title:hover { color: var(--brand); }
+.post-card .post-excerpt { color: var(--muted); margin: 0 0 12px; }
+.post-meta { color: var(--muted); display:flex; gap:10px; align-items:center; flex-wrap:wrap; font-size: 14px; }
+.post-meta .dot { opacity:.6; }
+.post-tags { display:flex; gap:8px; flex-wrap:wrap; }
+.post-tags a {
+  text-decoration:none; font-size: 12px; font-weight:600; color: var(--brand-2);
+  background: color-mix(in oklab, var(--brand) 12%, transparent);
+  padding:6px 10px; border-radius: 999px;
+}
+.post-tags a:hover { color:#fff; background: var(--brand); }
+
+/* ===== Single post ===== */
+.post .back { color: var(--muted); text-decoration:none; display:inline-block; margin-bottom: 8px; }
+.post h1 { margin: 8px 0 10px; color: var(--brand-2); }
+.post .post-cover { margin: 18px 0 10px; border-radius: var(--radius-md); overflow:hidden; box-shadow: var(--shadow-sm); }
+.post-content { color: var(--text); }
+.post-content h2, .post-content h3 { color: var(--brand-2); margin-top: 24px; }
+.post-content blockquote {
+  margin: 16px 0; padding: 12px 16px; border-left: 4px solid var(--brand);
+  background: color-mix(in oklab, var(--brand) 10%, transparent); border-radius: var(--radius-sm);
+}
+.post-sep { border:0; height:1px; background: rgba(0,0,0,.08); margin: 28px 0; }
+@media (prefers-color-scheme: dark){
+  .post-sep { background: rgba(255,255,255,.10); }
+}
+
+/* ===== Pagination ===== */
+.pagination { display:flex; gap:10px; justify-content:center; margin-top:28px; }
+.pagination .page {
+  display:inline-flex; align-items:center; justify-content:center;
+  min-width:42px; height:42px; padding:0 14px; border-radius: 12px;
+  background: var(--panel); color: var(--brand-2);
+  border:1px solid rgba(0,0,0,.06); box-shadow: var(--shadow-sm); text-decoration:none;
+}
+.pagination .current { background: linear-gradient(135deg, var(--brand) 0%, var(--brand-2) 100%); color:#fff; border-color: transparent; }
+@media (prefers-color-scheme: dark){
+  .pagination .page { border-color: rgba(255,255,255,.10); }
+}
+
+/* Optional: constrain line length in articles */
+.post .post-content { max-width: 68ch; margin-inline: auto; }
+   }
