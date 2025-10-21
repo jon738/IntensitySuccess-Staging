@@ -474,77 +474,10 @@ input[type="submit"].btn.btn-primary:hover {
   /* small tag pill in hero */
   .eyebrow { background: rgba(59,130,246,.18); color: var(--text); }
 }
-/* ===== FAQ — unified light-style cards in both themes ===== */
-#faq{
-  /* palette for this section only (fixed light look) */
-  --faq-surface: #ffffff;
-  --faq-text:    #0b3a66;   /* headings */
-  --faq-muted:   #475569;   /* body text */
-  --faq-border:  rgba(15,23,42,.08);
-  --faq-shadow:  0 22px 50px rgba(2,6,23,.15), 0 2px 8px rgba(2,6,23,.08);
-}
-
-#faq .section-intro p{ color: var(--faq-muted); }
-
-#faq details.faq{
-  background: var(--faq-surface) !important;
-  color: var(--faq-text) !important;
-  border: 1px solid var(--faq-border) !important;
-  border-radius: 16px;
-  padding: 16px 18px;
-  margin: 14px 0;
-  box-shadow: var(--faq-shadow);
-  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
-}
-
-#faq details.faq:hover{
-  transform: translateY(-2px);
-  box-shadow: 0 25px 60px rgba(2,6,23,.18), 0 6px 20px rgba(2,6,23,.10);
-}
-
-#faq details.faq[open]{
-  border-color: rgba(59,130,246,.25) !important;
-}
-
-/* question row */
-#faq summary{
-  cursor: pointer;
-  list-style: none;
-  font-weight: 700;
-  font-size: clamp(18px, 2vw, 22px);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: var(--faq-text) !important;
-}
-#faq summary::-webkit-details-marker{ display:none; }
-
-/* caret */
-#faq summary::after{
-  content: "▸";
-  margin-left: auto;
-  color: #94a3b8;
-  opacity: .85;
-  transition: transform .25s ease, opacity .25s ease;
-}
-#faq details[open] summary::after{
-  transform: rotate(90deg);
-  opacity: 1;
-}
-
-/* answer text */
-#faq details.faq p{
-  margin: 10px 0 0;
-  color: var(--faq-muted) !important;
-}
-
-/* keep the same white card look in dark mode, just adjust shadow a bit */
-@media (prefers-color-scheme: dark){
-  #faq{ --faq-shadow: 0 26px 60px rgba(0,0,0,.45), 0 6px 20px rgba(0,0,0,.25); }
-}
-/* ===== Refined FAQ – Elegant White Cards Across Themes ===== */
+/* ===== Refined FAQ – White Cards with Blue-Tint Open State ===== */
 #faq {
   --faq-surface: #ffffff;
+  --faq-surface-active: #f3f8ff;   /* faint blue tint when open */
   --faq-text: #0b3a66;
   --faq-muted: #475569;
   --faq-border: rgba(15, 23, 42, 0.08);
@@ -552,7 +485,7 @@ input[type="submit"].btn.btn-primary:hover {
   --faq-radius: 18px;
 }
 
-/* FAQ container spacing */
+/* Section description */
 #faq .section-intro p {
   color: var(--faq-muted);
 }
@@ -570,20 +503,25 @@ input[type="submit"].btn.btn-primary:hover {
     transform 0.25s ease,
     box-shadow 0.25s ease,
     border-color 0.25s ease,
-    background 0.25s ease;
+    background 0.3s ease;
 }
 
-/* Hover and open effects */
+/* Hover lift */
 #faq details.faq:hover {
   transform: translateY(-2px);
   box-shadow: 0 24px 60px rgba(2, 6, 23, 0.18),
               0 6px 22px rgba(2, 6, 23, 0.10);
 }
+
+/* Active/open card tint */
 #faq details.faq[open] {
+  background: var(--faq-surface-active);
   border-color: rgba(59, 130, 246, 0.25);
+  box-shadow: 0 26px 60px rgba(2, 6, 23, 0.20),
+              0 8px 26px rgba(2, 6, 23, 0.12);
 }
 
-/* Question summary */
+/* Summary question styling */
 #faq summary {
   cursor: pointer;
   list-style: none;
@@ -611,7 +549,7 @@ input[type="submit"].btn.btn-primary:hover {
   opacity: 1;
 }
 
-/* Answer content */
+/* Answer text */
 #faq details.faq p {
   margin: 12px 0 0;
   color: var(--faq-muted);
@@ -629,12 +567,9 @@ input[type="submit"].btn.btn-primary:hover {
 /* ---- Dark Mode Polish ---- */
 @media (prefers-color-scheme: dark) {
   #faq {
-    --faq-surface: #ffffff;
-    --faq-text: #0b3a66;
-    --faq-muted: #475569;
-    --faq-border: rgba(15, 23, 42, 0.12);
     --faq-shadow: 0 22px 50px rgba(0, 0, 0, 0.45),
                   0 3px 12px rgba(0, 0, 0, 0.25);
+    --faq-surface-active: #e8f1ff; /* keep subtle blue for open state */
   }
 
   #faq details.faq {
