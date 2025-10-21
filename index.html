@@ -180,11 +180,51 @@
             <textarea name="message" rows="6" required></textarea>
           </label>
           <button class="btn btn-primary" type="submit">Request Discovery Call</button>
-          <p class="form-note">Prefer email? <a href="mailto:hello@intensitysuccess.com">hello@intensitysuccess.com</a></p>
+          <p class="form-note">Prefer email? <a
+  href="mailto:hello@intensitysuccess.com?subject=Discovery%20Call%20Request&body=Hi%20Intensity%20Success%2C%0A%0AMy%20name%20is%20%5BYour%20Name%5D.%0ACompany%20(optional)%3A%20%5BYour%20Company%5D%0A%0AHere%E2%80%99s%20what%20I%E2%80%99m%20trying%20to%20achieve%20in%20the%20next%2090%20days%3A%0A%5BGoals%20and%20timeline%5D%0A%0AThanks!"
+>
+  hello@intensitysuccess.com
+</a></p>
         </form>
       </div>
     </section>
+<script>
+  // Assumes your form has id="contact-form" and fields with the below IDs
+  document.addEventListener('DOMContentLoaded', function () {
+    const form   = document.getElementById('contact-form');
+    const nameEl = document.getElementById('name');
+    const mailEl = document.getElementById('email');
+    const msgEl  = document.getElementById('message');
 
+    if (!form) return;
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const name = (nameEl?.value || '').trim();
+      const from = (mailEl?.value || '').trim();
+      const msg  = (msgEl?.value || '').trim();
+
+      const subject = `Discovery Call Request${name ? ` — ${name}` : ''}`;
+      const bodyLines = [
+        `Hi Intensity Success,`,
+        ``,
+        name ? `My name is ${name}.` : `My name is __________________.`,
+        from ? `My email is ${from}.` : `My email is __________________.`,
+        ``,
+        `Here’s what I’m trying to achieve in the next 90 days:`,
+        msg || `__________________`,
+        ``,
+        `Thanks!`
+      ];
+
+      const mailto = `mailto:hello@intensitysuccess.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyLines.join('\n'))}`;
+
+      // Open the user's email client with the pre-filled message
+      window.location.href = mailto;
+    });
+  });
+</script>
     <!-- Final CTA -->
     <section id="cta" class="section">
       <div class="container narrow" style="text-align:center;">
