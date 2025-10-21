@@ -1,21 +1,16 @@
 /* ===========================
    Intensity Success — FULL CSS
    =========================== */
-
 /* ---------- Theme ---------- */
 :root{
-  /* Brand */
-  --brand:   #3b82f6;   /* Blue 500 */
-  --brand-2: #0b3a66;   /* Deep navy */
+  color-scheme: light dark;   /* enables auto theming for scrollbars/forms */
+  --brand:   #3b82f6;
+  --brand-2: #0b3a66;
   --ring:    rgba(59,130,246,.35);
-
-  /* UI */
-  --bg:      #f4f6fa;   /* Page background */
-  --panel:   #ffffff;   /* Card/Panel */
-  --text:    #0b1220;   /* Primary text */
-  --muted:   #475569;   /* Secondary text */
-
-  /* Layout */
+  --bg:      #f4f6fa;
+  --panel:   #ffffff;
+  --text:    #0b1220;
+  --muted:   #475569;
   --radius-lg: 28px;
   --radius-md: 16px;
   --radius-sm: 12px;
@@ -23,6 +18,74 @@
   --shadow-md: 0 16px 40px rgba(11,58,102,.16);
 }
 
+/* ---------- DARK THEME OVERRIDES ---------- */
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:       #0b1220;
+    --panel:    #111a2b;
+    --text:     #e6eefc;
+    --muted:    #9fb0c9;
+    --brand-2:  #a7c5ff;
+    --ring:     rgba(88,140,255,.35);
+    --shadow-sm: 0 6px 18px rgba(0,0,0,.35);
+    --shadow-md: 0 16px 40px rgba(0,0,0,.45);
+  }
+
+  body{
+    background: var(--bg);
+    color: var(--text);
+  }
+
+  /* Header adjustments */
+  .site-header{
+    background: rgba(17,26,43,.28);
+    border-bottom-color: rgba(255,255,255,.12);
+    box-shadow: 0 2px 12px rgba(0,0,0,.45);
+  }
+  body.scrolled .site-header{
+    background: rgba(17,26,43,.45);
+    box-shadow: 0 6px 20px rgba(0,0,0,.55);
+  }
+
+  .card{
+    background: var(--panel);
+    border-color: rgba(255,255,255,.06);
+    box-shadow: var(--shadow-sm);
+  }
+  .card h3{ color: var(--text); }
+  .card p{ color: var(--muted); }
+
+  .section.alt{ background: var(--panel); }
+
+  .contact input,
+  .contact textarea{
+    background: #0e1728;
+    color: var(--text);
+    border-color: rgba(255,255,255,.10);
+  }
+  .contact input:focus,
+  .contact textarea:focus{
+    box-shadow: 0 0 0 4px var(--ring);
+  }
+
+  .hero{
+    background:
+      radial-gradient(1200px 600px at 10% 10%, rgba(59,130,246,.12), transparent 60%),
+      radial-gradient(800px 400px at 90% 30%, rgba(88,140,255,.10), transparent 60%),
+      var(--bg);
+  }
+
+  #outcomes .card.kpi{
+    background: var(--panel);
+    border-color: rgba(255,255,255,.06);
+  }
+  #outcomes .kpi-number{ color: var(--text); }
+
+  #faq details.faq{
+    background: var(--panel);
+    border-color: rgba(255,255,255,.10);
+  }
+}
 /* ---------- Base / reset ---------- */
 *{ box-sizing:border-box; }
 html,body{ height:100%; }
