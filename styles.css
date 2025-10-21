@@ -224,6 +224,15 @@ body.scrolled .site-header {
 .site-nav a:hover::after { opacity: 1; transform: scaleX(1); }
 .menu-toggle { display: none; font-size: 20px; background: none; border: none; color: var(--brand-2); }
 
+/* Active nav state */
+.site-nav a.active{
+  color: var(--brand);
+}
+.site-nav a.active::after{
+  opacity: 1;
+  transform: scaleX(1);
+}
+
 /* ====================================
    HERO (split layout)
 ==================================== */
