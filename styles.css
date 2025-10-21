@@ -72,6 +72,24 @@
   .site-nav a { color: var(--text); }
   .site-nav a:hover { color: var(--brand); }
 }
+/* Active nav link (current page) */
+.site-nav a.active {
+  color: var(--brand);
+  font-weight: 600;
+  position: relative;
+}
+
+.site-nav a.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 2px;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--brand), var(--brand-2));
+  border-radius: 2px;
+  opacity: 1;
+}
 /* ---------- Outcomes (KPIs) ---------- */
 /* Base layout */
 #outcomes .grid-3 { align-items: stretch; gap: 28px; }
