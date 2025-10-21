@@ -11,99 +11,48 @@
 <body>
   <!-- Header -->
   <header class="site-header">
-    <div class="container nav">
-      <a class="logo" href="/">Intensity Success</a>
+    <div class="nav container">
+      <a href="/" class="logo">Intensity Success</a>
+      <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
       <nav class="site-nav">
         <a href="/#services">Services</a>
         <a href="/#outcomes">Results</a>
         <a href="/#faq">FAQ</a>
-      
         <a class="btn btn-primary" href="/#contact">Contact</a>
       </nav>
-      <button class="menu-toggle" aria-label="Menu">☰</button>
     </div>
   </header>
 
-  <!-- Hero -->
-  <section class="section hero" style="padding:70px 0 36px;">
-    <div class="container narrow" style="text-align:center;">
-      <span class="eyebrow">Insights</span>
-      <h1 style="margin:10px 0 8px;">Blog</h1>
-      <p class="form-note">Practical systems, AI workflows, and 90-day strategies to help you stay consistent and focused.</p>
-    </div>
-  </section>
+  <!-- Blog Section -->
+  <section id="blog" class="section alt">
+    <div class="container narrow">
+      <h1 style="text-align:center; margin-bottom:12px;">The Intensity Blog</h1>
+      <p class="section-intro" style="text-align:center; color:var(--muted); max-width:680px; margin:0 auto 42px;">
+        Actionable insights on focus, discipline, and building momentum that lasts.
+      </p>
 
-  <!-- Blog Grid -->
-  <section class="section">
-    <div class="container">
-      <div class="grid-3" id="post-grid">
-
-        <!-- Post Card 1 -->
-        <article class="card post-card">
-          <a class="post-cover" href="/blog/posts/ai-weekly-planning.html">
-            <img src="/assets/img/covers/ai-weekly.jpg" alt="AI-assisted weekly planning">
-          </a>
-          <div class="post-body">
-            <a class="post-title" href="/blog/posts/ai-weekly-planning.html">
-              AI-Assisted Weekly Planning (in 20 Minutes)
-            </a>
-            <p class="post-excerpt">A lightweight cadence to plan your week, protect deep work, and let AI handle low-value tasks.</p>
-            <div class="post-meta">
-              <time datetime="2025-10-21">Oct 21 2025</time>
-              <span class="dot">•</span>
-              <span>6 min read</span>
-            </div>
-            <div class="post-tags">
-              <a href="/blog/tags/ai.html">#ai</a>
-              <a href="/blog/tags/systems.html">#systems</a>
-            </div>
-          </div>
+      <!-- Blog Grid -->
+      <div class="grid-3">
+        <!-- Post 1 -->
+        <article class="card reveal">
+          <h3><a href="how-to-reset-focus.html">How to Reset Focus When You Feel Scattered</a></h3>
+          <p>Discover a simple 3-step method to clear mental clutter and regain sharp focus in under 10 minutes.</p>
+          <a href="how-to-reset-focus.html" class="btn">Read More</a>
         </article>
 
-        <!-- Post Card 2 (Example Future Post) -->
-        <article class="card post-card">
-          <a class="post-cover" href="/blog/posts/deep-work-framework.html">
-            <img src="/assets/img/covers/deep-work.jpg" alt="Deep work framework">
-          </a>
-          <div class="post-body">
-            <a class="post-title" href="/blog/posts/deep-work-framework.html">
-              The Deep-Work Framework for Creative Professionals
-            </a>
-            <p class="post-excerpt">A 3-step process to reclaim your focus hours and produce work that moves the needle.</p>
-            <div class="post-meta">
-              <time datetime="2025-10-14">Oct 14 2025</time>
-              <span class="dot">•</span>
-              <span>5 min read</span>
-            </div>
-            <div class="post-tags">
-              <a href="/blog/tags/focus.html">#focus</a>
-              <a href="/blog/tags/productivity.html">#productivity</a>
-            </div>
-          </div>
+        <!-- Post 2 -->
+        <article class="card reveal">
+          <h3><a href="dopamine-systems.html">The Truth About Dopamine and Motivation</a></h3>
+          <p>Understand how your brain’s reward system really works — and how to use it to your advantage.</p>
+          <a href="dopamine-systems.html" class="btn">Read More</a>
         </article>
 
-        <!-- Post Card 3 (Placeholder) -->
-        <article class="card post-card">
-          <a class="post-cover" href="/blog/posts/ai-client-onboarding.html">
-            <img src="/assets/img/covers/ai-client.jpg" alt="AI client onboarding">
-          </a>
-          <div class="post-body">
-            <a class="post-title" href="/blog/posts/ai-client-onboarding.html">
-              Automating Client Onboarding with AI and Systems
-            </a>
-            <p class="post-excerpt">Streamline how clients enter your world — faster handoffs, consistent delivery, zero chaos.</p>
-            <div class="post-meta">
-              <time datetime="2025-09-30">Sep 30 2025</time>
-              <span class="dot">•</span>
-              <span>7 min read</span>
-            </div>
-            <div class="post-tags">
-              <a href="/blog/tags/automation.html">#automation</a>
-              <a href="/blog/tags/ops.html">#ops</a>
-            </div>
-          </div>
+        <!-- Post 3 -->
+        <article class="card reveal">
+          <h3><a href="momentum-framework.html">The Momentum Framework</a></h3>
+          <p>Learn how to build unstoppable consistency with small, compounding actions that drive real change.</p>
+          <a href="momentum-framework.html" class="btn">Read More</a>
         </article>
-
       </div>
     </div>
   </section>
@@ -120,8 +69,36 @@
     </div>
   </footer>
 
+  <!-- JS -->
   <script>
-    document.getElementById('y').textContent = new Date().getFullYear();
+    // Highlight blog nav if on /blog/
+    const path = window.location.pathname;
+    if (path.includes('/blog')) {
+      const blogLink = document.getElementById('nav-blog');
+      if (blogLink) blogLink.classList.add('active');
+    }
+
+    // Footer year
+    const y = document.getElementById('y');
+    if (y) y.textContent = new Date().getFullYear();
+
+    // Mobile menu
+    const toggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('.site-nav');
+    if (toggle && nav) {
+      toggle.addEventListener('click', () => {
+        const open = nav.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', open);
+      });
+    }
+
+    // Header scroll effect
+    const onScroll = () => {
+      if (window.scrollY > 6) document.body.classList.add('scrolled');
+      else document.body.classList.remove('scrolled');
+    };
+    window.addEventListener('scroll', onScroll);
+    onScroll();
   </script>
 </body>
 </html>
