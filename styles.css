@@ -80,18 +80,65 @@ button.btn { -webkit-appearance: none; appearance: none; border: none; }
   /* Process + KPI cards */
   #process .process li,
  
-  #outcomes .card.kpi {
-    background: var(--panel);
-    border-color: rgba(255,255,255,.08);
-    box-shadow: var(--shadow-sm);
-  }
-  #outcomes .kpi-number { color: var(--text); }
-
   /* Navigation links contrast */
   .site-nav a { color: var(--text); }
   .site-nav a:hover { color: var(--brand); }
 }
+/* ---------- Outcomes (KPIs) ---------- */
+/* Base layout */
+#outcomes .grid-3 { align-items: stretch; gap: 28px; }
+@media (max-width: 900px){ #outcomes .grid-3 { grid-template-columns: 1fr; } }
 
+/* Card surface, spacing, radius */
+#outcomes .card.kpi{
+  text-align: center;
+  padding: 44px 36px;
+  border-radius: 24px;
+  background: #fff;                          /* light default */
+  border: 1px solid rgba(0,0,0,.06);
+  box-shadow:
+    0 28px 60px rgba(11,58,102,.10),         /* soft drop */
+    0 2px 0 rgba(255,255,255,.90) inset;     /* subtle top bevel */
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+#outcomes .card.kpi:hover{
+  transform: translateY(-4px);
+  border-color: rgba(59,130,246,.22);
+  box-shadow:
+    0 36px 84px rgba(11,58,102,.14),
+    0 2px 0 rgba(255,255,255,.92) inset;
+}
+
+/* Typography */
+#outcomes .card.kpi h3{
+  margin: 0 0 14px;
+  line-height: 1;
+}
+#outcomes .kpi-number{
+  display: inline-block;
+  font-weight: 800;
+  letter-spacing: .5px;
+  font-size: clamp(44px, 6.2vw, 96px);       /* big headline number */
+  color: #0b3a66;
+}
+#outcomes .card.kpi p{
+  margin: 0;
+  color: #475569;
+  font-size: clamp(16px, 1.6vw, 20px);
+}
+
+/* ---- Dark mode match (same layout, darker surface) ---- */
+@media (prefers-color-scheme: dark){
+  #outcomes .card.kpi{
+    background: var(--panel);
+    border-color: rgba(255,255,255,.08);
+    box-shadow:
+      0 28px 60px rgba(0,0,0,.46),
+      0 1px 0 rgba(255,255,255,.04) inset;
+  }
+  #outcomes .kpi-number{ color: var(--text); }
+  #outcomes .card.kpi p{ color: var(--muted); }
+}
 /* ---------- Base / Reset ---------- */
 * { box-sizing: border-box; }
 html, body { height: 100%; }
@@ -249,10 +296,7 @@ body.scrolled .site-header {
   border-color: rgba(0,0,0,.08); /* default for light; dark override below */
 }
 
-/* KPI cards keep same surface */
-#outcomes .card.kpi {
-  background: var(--panel) !important;
-}
+
 
 /* Mobile menu panel should match theme */
 @media (max-width: 700px) {
@@ -279,7 +323,7 @@ body.scrolled .site-header {
 
   .card h3 { color: #0b3a66 !important; }
   .card p  { color: #475569 !important; }
-  #outcomes .kpi-number { color: #0b3a66 !important; }
+
 }
 
 
