@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Blog — Intensity Success</title>
+  <meta name="description" content="Articles on AI coaching, systems, and clarity." />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="/assets/css/site.css"><!-- your main CSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/blog/feed.xml" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="logo" href="/">Intensity Success</a>
+      <nav class="site-nav">
+        <a href="/#services">Services</a>
+        <a href="/#outcomes">Results</a>
+        <a href="/#faq">FAQ</a>
+        <a href="/blog/">Blog</a>
+        <a class="btn btn-primary" href="/#contact">Contact</a>
+      </nav>
+      <button class="menu-toggle" aria-label="Menu">☰</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="section hero" style="padding:64px 0 24px;">
+      <div class="container narrow" style="text-align:center">
+        <span class="eyebrow">Insights</span>
+        <h1 style="margin:10px 0 8px;">Blog</h1>
+        <p class="form-note">Ideas on AI-assisted strategy, systems, and clarity.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="grid-3" id="post-grid">
+
+          <!-- Repeat a card per post -->
+          <article class="card post-card">
+            <a class="post-cover" href="/blog/ai-weekly-planning/">
+              <!-- optional cover <img src="/assets/img/covers/ai-weekly.jpg" alt=""> -->
+            </a>
+            <div class="post-body">
+              <a class="post-title" href="/blog/ai-weekly-planning/">
+                AI-Assisted Weekly Planning (In 20 Minutes)
+              </a>
+              <p class="post-excerpt">A lightweight cadence to plan the week, cut low-value tasks, and protect deep work — with AI as a sidekick.</p>
+              <div class="post-meta">
+                <time datetime="2025-10-20">Oct 20, 2025</time>
+                <span class="dot">•</span>
+                <span>6 min read</span>
+              </div>
+              <div class="post-tags">
+                <a href="/blog/tags/systems/">#systems</a>
+                <a href="/blog/tags/ai/">#ai</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- …more <article> cards -->
+        </div>
+
+        <!-- Simple pagination -->
+        <nav class="pagination">
+          <a class="page prev" href="/blog/page/1/">&larr; Newer</a>
+          <span class="page current">2</span>
+          <a class="page next" href="/blog/page/3/">Older &rarr;</a>
+        </nav>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>© <span id="y"></span> Intensity Success · All rights reserved.</p>
+      <div class="footer-links">
+        <a href="/privacy">Privacy</a>
+        <a href="/terms">Terms</a>
+        <a href="/blog/feed.xml">RSS</a>
+      </div>
+    </div>
+  </footer>
+  <script>document.getElementById('y').textContent=new Date().getFullYear()</script>
+</body>
+</html>
