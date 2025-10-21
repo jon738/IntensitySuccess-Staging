@@ -255,7 +255,84 @@ body.scrolled .site-header {
   background: var(--panel);
   color: var(--text);
 }
+/* ===== Light-mode restore pack (keeps dark-mode overrides intact) ===== */
+@media (prefers-color-scheme: light) {
+  /* Header */
+  .site-header{
+    background: rgba(11,58,102,.20);
+    border-bottom-color: rgba(255,255,255,.25);
+    box-shadow: 0 2px 12px rgba(11,58,102,.08);
+  }
+  body.scrolled .site-header{
+    background: rgba(11,58,102,.35);
+    box-shadow: 0 4px 18px rgba(11,58,102,.14);
+  }
 
+  /* Hero background (brighter) */
+  .hero{
+    background:
+      radial-gradient(1200px 600px at 10% 10%, rgba(59,130,246,.15), transparent 60%),
+      radial-gradient(800px 400px at 90% 30%, rgba(11,58,102,.12), transparent 60%),
+      var(--bg);
+  }
+
+  /* Sections that were intentionally light */
+  .section.alt { background: #fff; }   /* About / FAQ wrapper in light mode */
+  #about { background:#fff; }
+  #contact { background:#f9fafc; }
+  .site-footer { background:#f9fafc; }
+
+  /* Cards (restore original contrast) */
+  .card{
+    background:#fff;
+    border:1px solid rgba(0,0,0,.06);
+    box-shadow:0 6px 18px rgba(11,58,102,.10);
+  }
+  .card h3{ color:#0b3a66; }
+  .card p { color:#475569; }
+
+  /* KPI cards */
+  #outcomes .card.kpi{
+    background:#fff;
+    border-color: rgba(0,0,0,.06);
+    box-shadow: 0 6px 18px rgba(11,58,102,.10);
+  }
+  #outcomes .kpi-number{ color:#0b3a66; }
+
+  /* Process steps (these weren’t using .card) */
+  #process .process li{
+    background:#fff;
+    border:1px solid rgba(0,0,0,.06);
+    box-shadow:0 6px 18px rgba(11,58,102,.10);
+  }
+
+  /* Testimonials */
+  .card.quote{
+    background:#fff;
+    border:1px solid rgba(0,0,0,.06);
+    box-shadow:0 6px 18px rgba(11,58,102,.10);
+  }
+
+  /* FAQ cards */
+  #faq details.faq{
+    background:#fff;
+    border:1px solid rgba(0,0,0,.08);
+    box-shadow: var(--shadow-sm);
+  }
+
+  /* Contact inputs (lighter fields) */
+  .contact input,
+  .contact textarea{
+    background:#fff;
+    color: var(--text);
+    border:1px solid rgba(0,0,0,.1);
+  }
+}
+
+/* Optional: smooth theme switch (doesn’t affect layout) */
+html, body, .section, .card, #process .process li, #faq details.faq, .site-header, .site-footer {
+  transition: background-color .25s ease, color .25s ease, border-color .25s ease, box-shadow .25s ease;
+}
 /* ====================================
    Responsive
 ==================================== */
