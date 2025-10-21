@@ -139,6 +139,24 @@ button.btn { -webkit-appearance: none; appearance: none; border: none; }
   #outcomes .kpi-number{ color: var(--text); }
   #outcomes .card.kpi p{ color: var(--muted); }
 }
+/* ---------- KPI Section Typography Alignment ---------- */
+#outcomes {
+  text-align: center;
+}
+
+#outcomes h2 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+#outcomes .section-intro p {
+  text-align: center;
+  margin: 8px auto 36px;
+  color: var(--muted);
+  max-width: 700px;
+  font-size: 18px;
+  line-height: 1.6;
+}
 /* ---------- Base / Reset ---------- */
 * { box-sizing: border-box; }
 html, body { height: 100%; }
