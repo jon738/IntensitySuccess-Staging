@@ -184,21 +184,29 @@ a { color: inherit; }
 .section { padding: 72px 0; }
 .section.alt { background: var(--panel); }
 
-/* ====================================
-   Header (glass, subtle blue tint)
-==================================== */
+/* ===== Sticky Glass Nav (Persistent on Scroll) ===== */
 .site-header {
-  position: sticky; top: 0; z-index: 100;
-  background: rgba(11,58,102,.20);
+  position: fixed; /* always visible */
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(11,58,102,0.25);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border-bottom: 1px solid rgba(255,255,255,.25);
-  box-shadow: 0 2px 12px rgba(11,58,102,.08);
-  transition: background .35s ease, box-shadow .35s ease;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+  box-shadow: 0 4px 20px rgba(11,58,102,0.12);
+  transition: background .35s ease, box-shadow .35s ease, transform .35s ease;
 }
+
 body.scrolled .site-header {
-  background: rgba(11,58,102,.35);
-  box-shadow: 0 4px 18px rgba(11,58,102,.14);
+  background: rgba(11,58,102,0.45);
+  box-shadow: 0 6px 28px rgba(11,58,102,0.20);
+}
+
+/* Prevent content from sliding under fixed header */
+body {
+  padding-top: 74px; /* adjust if header height changes */
 }
 .nav {
   display: flex; align-items: center; justify-content: space-between;
