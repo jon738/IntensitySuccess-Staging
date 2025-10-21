@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Momentum Framework — Intensity Success</title>
+  <meta name="description" content="A simple system to turn starts into streaks, and streaks into results." />
+  <!-- from /blog/posts back to the root stylesheet -->
+  <link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="nav container">
+      <a href="/" class="logo">Intensity Success</a>
+      <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+      <nav class="site-nav">
+        <a href="/#services">Services</a>
+        <a href="/#outcomes">Results</a>
+        <a href="/#faq">FAQ</a>
+        <a href="/blog/" id="nav-blog" class="active">Blog</a>
+        <a class="btn btn-primary" href="/#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Article -->
+  <article class="section alt">
+    <div class="container narrow">
+      <p class="form-note" style="margin:0 0 8px;"><a href="/blog/">&larr; Back to Blog</a></p>
+      <h1 style="text-align:center; margin-bottom:10px;">The Momentum Framework</h1>
+      <p class="form-note" style="text-align:center; margin:0 0 32px;">
+        Read time: ~5 min · Posted <time datetime="2025-10-21">Oct 21, 2025</time>
+      </p>
+
+      <div style="max-width:760px; margin:0 auto; line-height:1.8; color:var(--text);">
+        <p>Momentum is a design choice. If you can reliably create a clean start, a clear next step, and a quick win, you’ll move—even on low-motivation days. The Momentum Framework compresses that into three loops you can run daily.</p>
+
+        <h2>Loop 1 — Start Clean</h2>
+        <ul>
+          <li><strong>Clear the deck (2 min):</strong> jot every open loop on a scratch pad.</li>
+          <li><strong>Pick the lever:</strong> choose one task that makes others easier or irrelevant.</li>
+          <li><strong>Prime the first keystroke:</strong> write one sentence of what you’ll do next.</li>
+        </ul>
+
+        <h2>Loop 2 — Move Small</h2>
+        <p>Work in tiny, finishable units so you get the dopamine of done:</p>
+        <ul>
+          <li>Scope to <em>25 minutes</em> or less.</li>
+          <li>Define “done” in one line: “Send draft to X,” “Merge PR,” “Publish post.”</li>
+          <li>Capture the next breadcrumb before you stop.</li>
+        </ul>
+
+        <h2>Loop 3 — Close + Log</h2>
+        <ul>
+          <li>Move the card to <strong>Done</strong> (make progress visible).</li>
+          <li>Write a 2-line log: <em>What moved?</em> and <em>What’s first tomorrow?</em></li>
+          <li>Reset your workspace so the next start is frictionless.</li>
+        </ul>
+
+        <h3>Copy-Paste Card Template</h3>
+        <pre style="background:var(--panel); padding:16px 18px; border-radius:12px; overflow:auto; border:1px solid rgba(0,0,0,.08);">
+Task: ____________________________
+Definition of Done: _______________
+First Keystroke: _________________
+Block Size: 25m
+Next Breadcrumb (when stopping): __
+        </pre>
+
+        <h3>Daily Score (simple)</h3>
+        <pre style="background:var(--panel); padding:16px 18px; border-radius:12px; overflow:auto; border:1px solid rgba(0,0,0,.08);">
+[ ] 2 blocks shipped
+[ ] 1 thing sent (draft/PR/email)
+[ ] Close loops + set first step
+        </pre>
+
+        <p style="margin-top:28px;">Run the three loops. Momentum compounds because starts get easier, wins come faster, and your system—not your mood—drives the day.</p>
+      </div>
+    </div>
+  </article>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>© <span id="y"></span> Intensity Success · All rights reserved.</p>
+      <div class="footer-links">
+        <a href="/privacy">Privacy</a>
+        <a href="/terms">Terms</a>
+        <a href="/blog/">Blog</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JS -->
+  <script>
+    // Highlight blog in nav
+    if (window.location.pathname.includes('/blog')) {
+      const blogLink = document.getElementById('nav-blog');
+      if (blogLink) blogLink.classList.add('active');
+    }
+
+    // Footer year
+    const y = document.getElementById('y');
+    if (y) y.textContent = new Date().getFullYear();
+
+    // Mobile menu
+    const toggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('.site-nav');
+    if (toggle && nav) {
+      toggle.addEventListener('click', () => {
+        const open = nav.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', open);
+      });
+    }
+
+    // Header scrolled state
+    const onScroll = () => {
+      if (window.scrollY > 6) document.body.classList.add('scrolled');
+      else document.body.classList.remove('scrolled');
+    };
+    window.addEventListener('scroll', onScroll);
+    onScroll();
+  </script>
+</body>
+</html>
