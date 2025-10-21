@@ -244,7 +244,135 @@ body.scrolled .site-header {
 }
 .hero-points { margin: 16px 0 0; padding-left: 18px; color: var(--muted); }
 .hero-points li { margin: 4px 0; }
+/* ===== Hero visual (theme-aware grid + glow) ===== */
+/* Tunable CSS vars for the visual */
+:root{
+  --ai-grid: rgba(11,58,102,.10);
+  --ai-grid-2: rgba(11,58,102,.06);
+  --ai-glow: rgba(59,130,246,.18);
+  --ai-blob1: rgba(59,130,246,.28);
+  --ai-blob2: rgba(11,58,102,.20);
+  --ai-brain-bright: 1.02;
+  --ai-brain-contrast: 1.06;
+  --ai-brain-sat: 1.10;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --ai-grid: rgba(255,255,255,.06);
+    --ai-grid-2: rgba(59,130,246,.06);
+    --ai-glow: rgba(59,130,246,.14);
+    --ai-blob1: rgba(59,130,246,.35);
+    --ai-blob2: rgba(11,58,102,.28);
+    --ai-brain-bright: 1.08;
+    --ai-brain-contrast: 1.10;
+    --ai-brain-sat: 1.15;
+  }
+}
 
+/* Container card the brain sits in */
+.ai-visual{
+  --panel-radius: 28px;
+  position: relative;
+  height: 420px;
+  border-radius: var(--panel-radius);
+  overflow: hidden;
+  isolation: isolate;
+  box-shadow: var(--shadow-md);
+  background: transparent;
+}
+
+/* soft luminous underlayer */
+.ai-blob{
+  position:absolute; inset:-30px; border-radius:inherit;
+  background:
+    radial-gradient(620px 360px at 30% 35%, var(--ai-blob1), transparent 60%),
+    radial-gradient(520px 320px at 80% 70%, var(--ai-blob2), transparent 65%),
+    linear-gradient(180deg, rgba(255,255,255,.55), rgba(255,255,255,.28));
+  filter: blur(24px);
+  animation: blobPulse 10s ease-in-out infinite alternate;
+  z-index:0;
+}
+
+/* frosted grid */
+.ai-grid{
+  position:absolute; inset:0; border-radius:inherit;
+  background-image:
+    linear-gradient(0deg, var(--ai-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--ai-grid) 1px, transparent 1px);
+  background-size:22px 22px;
+  backdrop-filter: blur(10px) saturate(120%);
+  -webkit-backdrop-filter: blur(10px) saturate(120%);
+  box-shadow:
+    inset 0 0 0 1px var(--ai-grid-2),
+    0 26px 70px var(--ai-glow);
+  /* fade edges so it doesn't look boxed on light mode */
+  -webkit-mask: radial-gradient(120% 120% at 50% 50%, #000 68%, transparent 100%);
+          mask: radial-gradient(120% 120% at 50% 50%, #000 68%, transparent 100%);
+  animation: gridDrift 28s linear infinite, gridGlow 12s ease-in-out infinite;
+  z-index:1;
+}
+
+/* inner highlight + sweep */
+.ai-visual::before{
+  content:""; position:absolute; inset:0; border-radius:inherit;
+  background:
+    radial-gradient(120% 90% at 20% 10%, rgba(255,255,255,.35), transparent 50%),
+    radial-gradient(90% 80% at 85% 80%, rgba(255,255,255,.16), transparent 60%);
+  z-index:2; pointer-events:none;
+}
+.ai-visual::after{
+  content:""; position:absolute; top:-20%; left:-40%;
+  width:60%; height:140%;
+  background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,.14) 45%, transparent 90%);
+  transform: rotate(8deg);
+  filter: blur(18px);
+  animation: sweep 7.5s ease-in-out infinite;
+  z-index:2; pointer-events:none;
+}
+
+/* brain image (PNG/SVG with alpha) */
+.ai-brain{
+  position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+  width:88%; max-width:560px; height:auto; object-fit:contain; pointer-events:none;
+  filter: brightness(var(--ai-brain-bright))
+          contrast(var(--ai-brain-contrast))
+          saturate(var(--ai-brain-sat));
+  z-index:3;
+  animation: brainFloat 12s ease-in-out infinite;
+}
+
+/* animations */
+@keyframes brainFloat{
+  0%   { transform: translate(-50%,-50%) scale(1); }
+  50%  { transform: translate(-50%,-52%) scale(1.02); }
+  100% { transform: translate(-50%,-50%) scale(1); }
+}
+@keyframes blobPulse{
+  0%   { transform: translate(0,0) scale(1); opacity:.92; }
+  50%  { transform: translate(12px,-8px) scale(1.05); opacity:1; }
+  100% { transform: translate(-6px,4px) scale(1.02); opacity:.95; }
+}
+@keyframes gridDrift{
+  0%   { background-position: 0 0, 0 0; }
+  50%  { background-position: 28px 10px, 18px 6px; }
+  100% { background-position: 0 0, 0 0; }
+}
+@keyframes gridGlow{
+  0%,100% { box-shadow: inset 0 0 0 1px var(--ai-grid-2), 0 26px 70px var(--ai-glow); }
+  50%     { box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--ai-grid-2) 60%, transparent),
+                    0 34px 90px var(--ai-glow); }
+}
+@keyframes sweep{
+  0%   { transform: translateX(-10%) rotate(8deg); opacity:0; }
+  30%  { opacity:.55; }
+  60%  { transform: translateX(120%) rotate(8deg); opacity:0; }
+  100% { transform: translateX(120%) rotate(8deg); opacity:0; }
+}
+
+/* Responsive height tweaks (optional) */
+@media (max-width:1180px){ .ai-visual{ height:380px; } }
+@media (max-width:1020px){ .ai-visual{ order:-1; height:340px; margin-bottom:18px; } }
+@media (max-width:700px){  .ai-visual{ height:300px; } }
 /* ====================================
    Cards / Grids
 ==================================== */
