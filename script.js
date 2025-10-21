@@ -59,7 +59,63 @@
     revealEls.forEach(el => el.classList.add('show'));
   }
 })();
+<script>
+(function () {
+  /* ...your existing code above... */
 
+  /* --- Scroll-aware nav (Services / Results / FAQ / Contact) --- */
+  const navLinks = document.querySelectorAll('.site-nav a[href^="/#"], .site-nav a[href^="#"]');
+  const sectionIds = ['services','outcomes','faq','contact'];
+  const sections = sectionIds
+    .map(id => document.getElementById(id))
+    .filter(Boolean);
+
+  // Helper: activate a link that points to #id
+  const setActive = (id) => {
+    navLinks.forEach(a => {
+      const href = a.getAttribute('href') || '';
+      const targetId = href.replace('/#','').replace('#','');
+      a.classList.toggle('active', targetId === id);
+    });
+  };
+
+  // Observe sections entering viewport
+  if ('IntersectionObserver' in window && sections.length){
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(en => {
+        if (en.isIntersecting){
+          const id = en.target.id;
+          setActive(id);
+        }
+      });
+    }, { threshold: 0.6 }); // 60% visible feels right
+    sections.forEach(sec => io.observe(sec));
+  }
+
+  // Also: click -> immediate highlight (nice UX)
+  navLinks.forEach(a => {
+    a.addEventListener('click', () => {
+      const href = a.getAttribute('href') || '';
+      const id = href.replace('/#','').replace('#','');
+      if (sectionIds.includes(id)) setActive(id);
+    });
+  });
+
+  /* --- Blog nav stays active on any /blog* path --- */
+  const path = window.location.pathname;
+  const blogLink = document.getElementById('nav-blog');
+  if (blogLink){
+    if (path.startsWith('/blog') || path.includes('/blog/')) {
+      blogLink.classList.add('active');
+    } else {
+      blogLink.classList.remove('active');
+    }
+  }
+
+  /* ...your existing code below... */
+})();
+</script>
+   
 /* ---- KPI counters (run when #outcomes visible) ---- */
 /* Markup example:
    <span class="kpi-number" data-target="35" data-suffix="%">0</span>
