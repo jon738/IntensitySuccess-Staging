@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Blog — Intensity Success</title>
-  <meta name="description" content="Insights and frameworks for building systems, clarity, and unstoppable momentum." />
+  <meta name="description" content="Practical frameworks for focus, momentum, and mindset from Intensity Success." />
   <link rel="stylesheet" href="../styles.css">
 </head>
 
@@ -18,41 +18,39 @@
         <a href="/#services">Services</a>
         <a href="/#outcomes">Results</a>
         <a href="/#faq">FAQ</a>
+        <a href="/blog/" id="nav-blog" class="active">Blog</a>
         <a class="btn btn-primary" href="/#contact">Contact</a>
       </nav>
     </div>
   </header>
 
-  <!-- Blog Section -->
-  <section id="blog" class="section alt">
+  <!-- Blog Listing -->
+  <section class="section alt">
     <div class="container narrow">
-      <h1 style="text-align:center; margin-bottom:12px;">The Intensity Blog</h1>
-      <p class="section-intro" style="text-align:center; color:var(--muted); max-width:680px; margin:0 auto 42px;">
-        Actionable insights on focus, discipline, and building momentum that lasts.
-      </p>
+      <h1 style="text-align:center; margin-bottom:12px;">Blog</h1>
+      <p class="form-note" style="text-align:center; margin-bottom:42px;">Systems, mindset, and clarity for creating unstoppable momentum.</p>
 
-      <!-- Blog Grid -->
       <div class="grid-3">
         <!-- Post 1 -->
-        <article class="card reveal">
-          <h3><a href="how-to-reset-focus.html">How to Reset Focus When You Feel Scattered</a></h3>
-          <p>Discover a simple 3-step method to clear mental clutter and regain sharp focus in under 10 minutes.</p>
-          <a href="/blog/posts/how-to-reset-focus.html" class="btn">Read More</a>
-        </article>
+        <a href="/blog/posts/how-to-reset-focus.html" class="card reveal" style="text-decoration:none;">
+          <h3>How to Reset Focus When You Feel Scattered</h3>
+          <p>Three steps to clear mental clutter, calm your mind, and regain flow in under ten minutes.</p>
+          <p class="form-note" style="margin-top:10px;">Oct 21, 2025 · 5 min read</p>
+        </a>
 
         <!-- Post 2 -->
-        <article class="card reveal">
-          <h3><a href="dopamine-systems.html">The Truth About Dopamine and Motivation</a></h3>
-          <p>Understand how your brain’s reward system really works — and how to use it to your advantage.</p>
-          <a href="/blog/posts/dopamine-systems.html" class="btn">Read More</a>
-        </article>
+        <a href="/blog/posts/dopamine-systems.html" class="card reveal" style="text-decoration:none;">
+          <h3>Dopamine, Systems, and Sustainable Motivation</h3>
+          <p>Stop chasing motivation. Learn how to design systems that make focus automatic.</p>
+          <p class="form-note" style="margin-top:10px;">Oct 21, 2025 · 6 min read</p>
+        </a>
 
         <!-- Post 3 -->
-        <article class="card reveal">
-          <h3><a href="momentum-framework.html">The Momentum Framework</a></h3>
-          <p>Learn how to build unstoppable consistency with small, compounding actions that drive real change.</p>
-          <a href="/blog/posts/momentum-framework.html" class="btn">Read More</a>
-        </article>
+        <a href="/blog/posts/momentum-framework.html" class="card reveal" style="text-decoration:none;">
+          <h3>The Momentum Framework</h3>
+          <p>A 3-loop method to turn starts into streaks and streaks into results.</p>
+          <p class="form-note" style="margin-top:10px;">Oct 21, 2025 · 5 min read</p>
+        </a>
       </div>
     </div>
   </section>
@@ -71,7 +69,7 @@
 
   <!-- JS -->
   <script>
-    // Highlight blog nav if on /blog/
+    // Highlight blog nav
     const path = window.location.pathname;
     if (path.includes('/blog')) {
       const blogLink = document.getElementById('nav-blog');
@@ -92,13 +90,25 @@
       });
     }
 
-    // Header scroll effect
-    const onScroll = () => {
-      if (window.scrollY > 6) document.body.classList.add('scrolled');
-      else document.body.classList.remove('scrolled');
+    // Reveal on scroll
+    const setupReveal = () => {
+      const revealEls = document.querySelectorAll('.reveal');
+      if (!revealEls.length) return;
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach((en) => {
+            if (en.isIntersecting) {
+              en.target.classList.add('show');
+              io.unobserve(en.target);
+            }
+          });
+        }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+        revealEls.forEach((el) => io.observe(el));
+      } else {
+        revealEls.forEach((el) => el.classList.add('show'));
+      }
     };
-    window.addEventListener('scroll', onScroll);
-    onScroll();
+    setupReveal();
   </script>
 </body>
 </html>
