@@ -542,3 +542,103 @@ input[type="submit"].btn.btn-primary:hover {
 @media (prefers-color-scheme: dark){
   #faq{ --faq-shadow: 0 26px 60px rgba(0,0,0,.45), 0 6px 20px rgba(0,0,0,.25); }
 }
+/* ===== Refined FAQ – Elegant White Cards Across Themes ===== */
+#faq {
+  --faq-surface: #ffffff;
+  --faq-text: #0b3a66;
+  --faq-muted: #475569;
+  --faq-border: rgba(15, 23, 42, 0.08);
+  --faq-shadow: 0 20px 40px rgba(2, 6, 23, 0.15), 0 3px 10px rgba(2, 6, 23, 0.08);
+  --faq-radius: 18px;
+}
+
+/* FAQ container spacing */
+#faq .section-intro p {
+  color: var(--faq-muted);
+}
+
+/* FAQ cards */
+#faq details.faq {
+  background: linear-gradient(180deg, #ffffff 0%, #f9fbff 100%);
+  border: 1px solid var(--faq-border);
+  border-radius: var(--faq-radius);
+  padding: 18px 20px;
+  margin: 16px 0;
+  color: var(--faq-text);
+  box-shadow: var(--faq-shadow);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease,
+    background 0.25s ease;
+}
+
+/* Hover and open effects */
+#faq details.faq:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 24px 60px rgba(2, 6, 23, 0.18),
+              0 6px 22px rgba(2, 6, 23, 0.10);
+}
+#faq details.faq[open] {
+  border-color: rgba(59, 130, 246, 0.25);
+}
+
+/* Question summary */
+#faq summary {
+  cursor: pointer;
+  list-style: none;
+  font-weight: 700;
+  font-size: clamp(18px, 2vw, 22px);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--faq-text);
+  user-select: none;
+}
+#faq summary::-webkit-details-marker { display: none; }
+
+/* Arrow caret */
+#faq summary::after {
+  content: "▸";
+  margin-left: auto;
+  color: #94a3b8;
+  opacity: 0.8;
+  font-size: 16px;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+#faq details[open] summary::after {
+  transform: rotate(90deg);
+  opacity: 1;
+}
+
+/* Answer content */
+#faq details.faq p {
+  margin: 12px 0 0;
+  color: var(--faq-muted);
+  line-height: 1.6;
+  font-size: 16px;
+  animation: faqFadeIn 0.35s ease forwards;
+}
+
+/* Smooth fade reveal */
+@keyframes faqFadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ---- Dark Mode Polish ---- */
+@media (prefers-color-scheme: dark) {
+  #faq {
+    --faq-surface: #ffffff;
+    --faq-text: #0b3a66;
+    --faq-muted: #475569;
+    --faq-border: rgba(15, 23, 42, 0.12);
+    --faq-shadow: 0 22px 50px rgba(0, 0, 0, 0.45),
+                  0 3px 12px rgba(0, 0, 0, 0.25);
+  }
+
+  #faq details.faq {
+    background: linear-gradient(180deg, #ffffff 0%, #f5f8ff 100%);
+    box-shadow: var(--faq-shadow);
+  }
+}
