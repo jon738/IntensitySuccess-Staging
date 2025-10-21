@@ -85,6 +85,54 @@
     background: var(--panel);
     border-color: rgba(255,255,255,.10);
   }
+   /* --- Dark-mode fixes for light-hardcoded sections --- */
+
+/* Contact section background + inputs + small notes */
+#contact{
+  background:#0e1728;                /* darker surface under the cards */
+}
+#contact .form-note{ color:var(--muted); }
+
+/* Footer */
+.site-footer{
+  background:#0e1728;
+  border-top-color:rgba(255,255,255,.10);
+}
+.footer-links a{ color:var(--text); }
+.footer-links a:hover{ color:var(--brand); }
+
+/* “Alt” sections container (About/FAQ wrappers) */
+.section.alt{ background:var(--panel); }
+
+/* Process steps weren’t using .card class, so theme them too */
+#process .process li{
+  background:var(--panel);
+  border-color:rgba(255,255,255,.08);
+  box-shadow:var(--shadow-sm);
+}
+
+/* Ensure nav links are readable on the darker header */
+.site-nav a{ color:var(--text); }
+.site-nav a:hover{ color:var(--brand); }
+
+/* KPI cards (you partly had this; tighten borders) */
+#outcomes .card.kpi{
+  background:var(--panel);
+  border-color:rgba(255,255,255,.08);
+}
+#outcomes .kpi-number{ color:var(--text); }
+
+/* Inputs in contact: placeholder + border polish */
+.contact input,
+.contact textarea{
+  background:#0e1728;
+  color:var(--text);
+  border-color:rgba(255,255,255,.12);
+}
+.contact input::placeholder,
+.contact textarea::placeholder{
+  color:rgba(230,238,252,.6);
+}
 }
 /* ---------- Base / reset ---------- */
 *{ box-sizing:border-box; }
