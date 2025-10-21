@@ -54,28 +54,10 @@
     }
   </style>
 </head>
-<script>
-(async () => {
-  try {
-    const res = await fetch('/includes/header.html');
-    const html = await res.text();
-    document.getElementById('site-header').innerHTML = html;
 
-    // Optional: Activate nav toggle after insertion
-    const toggle = document.querySelector('.menu-toggle');
-    const nav = document.querySelector('.site-nav');
-    if (toggle && nav) {
-      toggle.addEventListener('click', () => {
-        const open = nav.classList.toggle('open');
-        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-      });
-    }
-  } catch (err) {
-    console.error('Header load failed:', err);
-  }
-})();
-</script>
 <body>
+  <div id="site-header"></div>
+  
   <!-- Header -->
   <header class="site-header">
     <div class="nav container">
@@ -232,5 +214,59 @@
 
   loadNews();
   </script>
+  <script>
+(function () {
+  // Detect base path for production vs GitHub Pages staging
+  var projectPath = '/IntensitySuccess-Staging/';
+  var prefix = location.pathname.startsWith(projectPath) ? projectPath : '/';
+
+  function wireHeader() {
+    const toggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('.site-nav');
+    const header = document.querySelector('.site-header');
+
+    // Sticky header on scroll
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 6) document.body.classList.add('scrolled');
+      else document.body.classList.remove('scrolled');
+    });
+
+    // Mobile menu toggle
+    if (toggle && nav) {
+      toggle.addEventListener('click', () => {
+        const open = nav.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+    }
+
+    // Highlight active page
+    const path = window.location.pathname;
+    if (path.includes('/blog')) document.getElementById('nav-blog')?.classList.add('active');
+    if (path.includes('/videos')) document.getElementById('nav-videos')?.classList.add('active');
+    if (path.includes('/news')) document.getElementById('nav-news')?.classList.add('active');
+  }
+
+  function loadHeader() {
+    const mount = document.getElementById('site-header');
+    if (!mount) return;
+    fetch(prefix + 'includes/header.html', { cache: 'no-cache' })
+      .then(r => {
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.text();
+      })
+      .then(html => {
+        mount.innerHTML = html;
+        wireHeader();
+      })
+      .catch(err => console.error('Header load failed:', err));
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadHeader);
+  } else {
+    loadHeader();
+  }
+})();
+</script>
 </body>
 </html>
