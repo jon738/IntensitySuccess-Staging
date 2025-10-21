@@ -4,7 +4,7 @@
   <!-- Base path helper (GitHub Pages safe) -->
   <script>
     (function () {
-      var projectPath = '/IntensitySuccess-Staging/';   // ← staging repo path
+      var projectPath = '/IntensitySuccess-Staging/';   // staging repo path
       var base = location.pathname.startsWith(projectPath) ? projectPath : '/';
       var baseEl = document.createElement('base');
       baseEl.setAttribute('href', base);
@@ -19,52 +19,24 @@
   <link rel="stylesheet" href="../styles.css">
   <style>
     /* Page-specific additions */
-    .filter-tabs {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin: 0 0 22px;
+    .filter-tabs { display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin:0 0 22px; }
+    .filter-tabs .tab{
+      border-radius:999px; padding:10px 14px; font-weight:600;
+      border:1px solid rgba(0,0,0,.08); background:var(--panel); box-shadow:var(--shadow-sm);
+      cursor:pointer; transition:transform .2s, box-shadow .2s, border-color .2s, background .2s, color .2s;
     }
-    .filter-tabs .tab {
-      border-radius: 999px;
-      padding: 10px 14px;
-      font-weight: 600;
-      border: 1px solid rgba(0, 0, 0, .08);
-      background: var(--panel);
-      box-shadow: var(--shadow-sm);
-      cursor: pointer;
-      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease, color .2s ease;
+    .filter-tabs .tab[aria-pressed="true"]{
+      background:linear-gradient(135deg, var(--brand) 0%, var(--brand-2) 100%);
+      color:#fff; border-color:transparent; box-shadow:0 8px 22px rgba(59,130,246,.28);
     }
-    .filter-tabs .tab[aria-pressed="true"] {
-      background: linear-gradient(135deg, var(--brand) 0%, var(--brand-2) 100%);
-      color: #fff;
-      border-color: transparent;
-      box-shadow: 0 8px 22px rgba(59, 130, 246, .28);
-    }
-    .news-meta {
-      color: var(--muted);
-      font-size: 14px;
-      margin-top: 8px;
-    }
-    .news-empty {
-      text-align: center;
-      color: var(--muted);
-      padding: 16px 0;
-    }
+    .news-meta{ color:var(--muted); font-size:14px; margin-top:8px; }
+    .news-empty{ text-align:center; color:var(--muted); padding:16px 0; }
   </style>
 </head>
 
 <body>
+  <!-- Injected header goes here (do NOT also hard-code a header) -->
   <div id="site-header"></div>
-  
-  <!-- Header -->
-  <header class="site-header">
-    <div class="nav container">
-      <a href="/" class="logo">Intensity Success</a>
-      <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
-    </div>
-  </header>
 
   <!-- AI News -->
   <section class="section alt">
@@ -93,171 +65,163 @@
     </div>
   </footer>
 
+  <!-- News logic (kept separate; does NOT try to wire menu) -->
   <script>
-  /* ---------- Base setup ---------- */
-  document.getElementById('y').textContent = new Date().getFullYear();
-  const toggle = document.querySelector('.menu-toggle');
-  const nav = document.querySelector('.site-nav');
-  if (toggle && nav) {
-    toggle.addEventListener('click', () => {
-      const open = nav.classList.toggle('open');
-      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    // Footer year
+    (function(){ var y=document.getElementById('y'); if(y) y.textContent=new Date().getFullYear(); })();
+
+    // Reveal header shadow on scroll (safe even before header injection)
+    (function(){
+      const onScroll=()=>{ if (window.scrollY>6) document.body.classList.add('scrolled'); else document.body.classList.remove('scrolled'); };
+      onScroll(); window.addEventListener('scroll', onScroll);
+    })();
+
+    /* ---------- Filters + Feed ---------- */
+    const TABS = [
+      { key:'all',      label:'All',      q:'("artificial intelligence" OR AI)' },
+      { key:'research', label:'Research', q:'("AI research" OR "machine learning research" OR arXiv)' },
+      { key:'tools',    label:'Tools',    q:'("AI tools" OR "AI features" OR "AI productivity")' },
+      { key:'business', label:'Business', q:'("AI startup" OR "AI investment" OR "AI funding")' },
+      { key:'ethics',   label:'Ethics',   q:'("AI ethics" OR "AI safety" OR "AI regulation")' },
+      { key:'llms',     label:'LLMs',     q:'(GPT OR "GPT-4" OR "Claude" OR "Gemini" OR "Llama")' },
+    ];
+
+    const tabsWrap = document.querySelector('.filter-tabs');
+    const feed = document.getElementById('news-feed');
+    const moreEl = document.getElementById('news-more');
+    let activeKey = sessionStorage.getItem('aiNewsTab') || 'all';
+
+    TABS.forEach(tab => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'tab';
+      b.textContent = tab.label;
+      b.dataset.key = tab.key;
+      b.setAttribute('aria-pressed', tab.key === activeKey ? 'true' : 'false');
+      b.addEventListener('click', () => {
+        if (activeKey === tab.key) return;
+        document.querySelectorAll('.filter-tabs .tab').forEach(el => el.setAttribute('aria-pressed','false'));
+        b.setAttribute('aria-pressed','true');
+        activeKey = tab.key;
+        sessionStorage.setItem('aiNewsTab', activeKey);
+        loadNews();
+      });
+      tabsWrap.appendChild(b);
     });
-  }
-  const onScroll = () => {
-    if (window.scrollY > 6) document.body.classList.add('scrolled');
-    else document.body.classList.remove('scrolled');
-  };
-  onScroll(); window.addEventListener('scroll', onScroll);
 
-  /* ---------- Filters + Feed ---------- */
-  const TABS = [
-    { key:'all',      label:'All',      q:'("artificial intelligence" OR AI)' },
-    { key:'research', label:'Research', q:'("AI research" OR "machine learning research" OR arXiv)' },
-    { key:'tools',    label:'Tools',    q:'("AI tools" OR "AI features" OR "AI productivity")' },
-    { key:'business', label:'Business', q:'("AI startup" OR "AI investment" OR "AI funding")' },
-    { key:'ethics',   label:'Ethics',   q:'("AI ethics" OR "AI safety" OR "AI regulation")' },
-    { key:'llms',     label:'LLMs',     q:'(GPT OR "GPT-4" OR "Claude" OR "Gemini" OR "Llama")' },
-  ];
-
-  const tabsWrap = document.querySelector('.filter-tabs');
-  const feed = document.getElementById('news-feed');
-  const moreEl = document.getElementById('news-more');
-  let activeKey = sessionStorage.getItem('aiNewsTab') || 'all';
-
-  TABS.forEach(tab => {
-    const b = document.createElement('button');
-    b.type = 'button';
-    b.className = 'tab';
-    b.textContent = tab.label;
-    b.dataset.key = tab.key;
-    b.setAttribute('aria-pressed', tab.key === activeKey ? 'true' : 'false');
-    b.addEventListener('click', () => {
-      if (activeKey === tab.key) return;
-      document.querySelectorAll('.filter-tabs .tab').forEach(el => el.setAttribute('aria-pressed','false'));
-      b.setAttribute('aria-pressed','true');
-      activeKey = tab.key;
-      sessionStorage.setItem('aiNewsTab', activeKey);
-      loadNews();
-    });
-    tabsWrap.appendChild(b);
-  });
-
-  function skeletonCards(n=6){
-    feed.innerHTML = Array.from({length:n}).map(()=>`
-      <article class="card" style="min-height:140px; opacity:.7;">
-        <div class="form-note">Loading…</div>
-      </article>`).join('');
-    moreEl.textContent = '';
-  }
-
-  function googleNewsRssUrl(query){
-    const base = 'https://news.google.com/rss/search';
-    const params = new URLSearchParams({
-      q: query,
-      hl: 'en-US',
-      gl: 'US',
-      ceid: 'US:en'
-    });
-    return `${base}?${params.toString()}`;
-  }
-
-  async function loadNews(){
-    skeletonCards();
-    const tab = TABS.find(t => t.key === activeKey) || TABS[0];
-    const rssUrl = googleNewsRssUrl(tab.q);
-    const rss2json = 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(rssUrl);
-
-    try {
-      const res = await fetch(rss2json, { cache: 'no-store' });
-      if (!res.ok) throw new Error('feed error');
-      const data = await res.json();
-      const items = (data.items || []).slice(0, 9);
-
-      if (!items.length) {
-        feed.innerHTML = `<p class="news-empty">No stories right now. Try another filter.</p>`;
-        return;
-      }
-
-      feed.innerHTML = items.map(item => {
-        const clean = (item.description || '').replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').trim();
-        const blurb = clean.length > 160 ? clean.slice(0,160)+'…' : clean;
-        const date = new Date(item.pubDate || Date.now()).toLocaleDateString();
-        return `
-          <article class="card reveal">
-            <a href="${item.link}" target="_blank" rel="noopener" style="text-decoration:none; color:inherit;">
-              <h3>${item.title}</h3>
-              <p>${blurb || 'Latest update in AI.'}</p>
-              <p class="news-meta">${date}</p>
-            </a>
-          </article>`;
-      }).join('');
-
-      const gnLink = 'https://news.google.com/search?q=' + encodeURIComponent(tab.q) + '&hl=en-US&gl=US&ceid=US:en';
-      moreEl.innerHTML = `<a class="btn" href="${gnLink}" target="_blank" rel="noopener">More ${tab.label} news →</a>`;
-
-    } catch (err) {
-      console.error(err);
-      feed.innerHTML = `<p class="news-empty">Couldn’t load news right now. Please refresh.</p>`;
+    function skeletonCards(n=6){
+      feed.innerHTML = Array.from({length:n}).map(()=>`
+        <article class="card" style="min-height:140px; opacity:.7;">
+          <div class="form-note">Loading…</div>
+        </article>`).join('');
       moreEl.textContent = '';
     }
-  }
 
-  loadNews();
+    function googleNewsRssUrl(query){
+      const base = 'https://news.google.com/rss/search';
+      const params = new URLSearchParams({ q: query, hl:'en-US', gl:'US', ceid:'US:en' });
+      return `${base}?${params.toString()}`;
+    }
+
+    async function loadNews(){
+      skeletonCards();
+      const tab = TABS.find(t => t.key === activeKey) || TABS[0];
+      const rssUrl = googleNewsRssUrl(tab.q);
+      const rss2json = 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(rssUrl);
+
+      try {
+        const res = await fetch(rss2json, { cache: 'no-store' });
+        if (!res.ok) throw new Error('feed error');
+        const data = await res.json();
+        const items = (data.items || []).slice(0, 9);
+
+        if (!items.length) {
+          feed.innerHTML = `<p class="news-empty">No stories right now. Try another filter.</p>`;
+          return;
+        }
+
+        feed.innerHTML = items.map(item => {
+          const clean = (item.description || '').replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').trim();
+          const blurb = clean.length > 160 ? clean.slice(0,160)+'…' : clean;
+          const date = new Date(item.pubDate || Date.now()).toLocaleDateString();
+          return `
+            <article class="card reveal">
+              <a href="${item.link}" target="_blank" rel="noopener" style="text-decoration:none; color:inherit;">
+                <h3>${item.title}</h3>
+                <p>${blurb || 'Latest update in AI.'}</p>
+                <p class="news-meta">${date}</p>
+              </a>
+            </article>`;
+        }).join('');
+
+        const gnLink = 'https://news.google.com/search?q=' + encodeURIComponent(tab.q) + '&hl=en-US&gl=US&ceid=US:en';
+        moreEl.innerHTML = `<a class="btn" href="${gnLink}" target="_blank" rel="noopener">More ${tab.label} news →</a>`;
+
+      } catch (err) {
+        console.error(err);
+        feed.innerHTML = `<p class="news-empty">Couldn’t load news right now. Please refresh.</p>`;
+        moreEl.textContent = '';
+      }
+    }
+
+    loadNews();
   </script>
+
+  <!-- Header include loader (place AFTER content so it doesn’t block) -->
   <script>
-(function () {
-  // Detect base path for production vs GitHub Pages staging
-  var projectPath = '/IntensitySuccess-Staging/';
-  var prefix = location.pathname.startsWith(projectPath) ? projectPath : '/';
+  (function () {
+    var projectPath = '/IntensitySuccess-Staging/';
+    var prefix = location.pathname.startsWith(projectPath) ? projectPath : '/';
 
-  function wireHeader() {
-    const toggle = document.querySelector('.menu-toggle');
-    const nav = document.querySelector('.site-nav');
-    const header = document.querySelector('.site-header');
-
-    // Sticky header on scroll
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 6) document.body.classList.add('scrolled');
-      else document.body.classList.remove('scrolled');
-    });
-
-    // Mobile menu toggle
-    if (toggle && nav) {
-      toggle.addEventListener('click', () => {
-        const open = nav.classList.toggle('open');
-        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    function rewriteLinksForStaging(scope){
+      if (prefix === '/') return; // production: nothing to do
+      scope.querySelectorAll('a[href^="/"]').forEach(a => {
+        var href = a.getAttribute('href');          // e.g. "/blog/"
+        a.setAttribute('href', prefix + href.slice(1)); // -> "/IntensitySuccess-Staging/blog/"
       });
     }
 
-    // Highlight active page
-    const path = window.location.pathname;
-    if (path.includes('/blog')) document.getElementById('nav-blog')?.classList.add('active');
-    if (path.includes('/videos')) document.getElementById('nav-videos')?.classList.add('active');
-    if (path.includes('/news')) document.getElementById('nav-news')?.classList.add('active');
-  }
+    function wireHeader() {
+      const toggle = document.querySelector('.menu-toggle');
+      const nav = document.querySelector('.site-nav');
 
-  function loadHeader() {
-    const mount = document.getElementById('site-header');
-    if (!mount) return;
-    fetch(prefix + 'includes/header.html', { cache: 'no-cache' })
-      .then(r => {
-        if (!r.ok) throw new Error('HTTP ' + r.status);
-        return r.text();
-      })
-      .then(html => {
-        mount.innerHTML = html;
-        wireHeader();
-      })
-      .catch(err => console.error('Header load failed:', err));
-  }
+      // Mobile menu toggle
+      if (toggle && nav) {
+        toggle.addEventListener('click', () => {
+          const open = nav.classList.toggle('open');
+          toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+      }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', loadHeader);
-  } else {
-    loadHeader();
-  }
-})();
-</script>
+      // Highlight active page
+      const path = window.location.pathname;
+      if (path.includes('/blog'))   document.getElementById('nav-blog')?.classList.add('active');
+      if (path.includes('/videos')) document.getElementById('nav-videos')?.classList.add('active');
+      if (path.includes('/news'))   document.getElementById('nav-news')?.classList.add('active');
+    }
+
+    function loadHeader() {
+      const mount = document.getElementById('site-header');
+      if (!mount) return;
+      fetch(prefix + 'includes/header.html', { cache: 'no-cache' })
+        .then(r => {
+          if (!r.ok) throw new Error('HTTP ' + r.status);
+          return r.text();
+        })
+        .then(html => {
+          mount.innerHTML = html;
+          rewriteLinksForStaging(mount);
+          wireHeader();
+        })
+        .catch(err => console.error('Header load failed:', err));
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', loadHeader);
+    } else {
+      loadHeader();
+    }
+  })();
+  </script>
 </body>
 </html>
