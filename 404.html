@@ -11,7 +11,19 @@
     <div class="narrow">
       <h1>404 – Page not found</h1>
       <p class="form-note">The page you’re looking for doesn’t exist or moved.</p>
-      <p><a class="btn btn-primary" href="/">Go home</a></p>
+      <p><a id="home-link" class="btn btn-primary" href="/">Go home</a></p>
+
+<script>
+(function () {
+  // Detect GitHub Pages project path vs production
+  var projectPath = '/IntensitySuccess-Staging/';
+  var prefix = location.pathname.startsWith(projectPath) ? projectPath : '/';
+
+  // Fix the home button
+  var homeLink = document.getElementById('home-link');
+  if (homeLink) homeLink.setAttribute('href', prefix);
+})();
+</script>
     </div>
   </main>
 </body>
