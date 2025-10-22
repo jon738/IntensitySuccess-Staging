@@ -2,14 +2,27 @@
    Intensity Success — script.js
    =========================== */
 
-/* ---- Mobile Menu Toggle ---- */
+/* ---- Mobile Menu Toggle + Close-on-click ---- */
 (() => {
   const toggle = document.querySelector('.menu-toggle');
   const nav = document.querySelector('.site-nav');
   if (!toggle || !nav) return;
+
+  const setExpanded = (open) => toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+
   toggle.addEventListener('click', () => {
     const open = nav.classList.toggle('open');
-    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    setExpanded(open);
+  });
+
+  // Close the panel when a nav link is clicked (mobile)
+  nav.addEventListener('click', (e) => {
+    const a = e.target.closest('a');
+    if (!a) return;
+    if (nav.classList.contains('open')) {
+      nav.classList.remove('open');
+      setExpanded(false);
+    }
   });
 })();
 
@@ -23,6 +36,29 @@
   window.addEventListener('scroll', onScroll, { passive: true });
 })();
 
+/* ---- Smooth scroll for same-page anchors (offset for fixed header) ---- */
+(() => {
+  const header = document.querySelector('.site-header');
+  const headerHeight = () => (header ? header.getBoundingClientRect().height : 0);
+
+  const onClick = (e) => {
+    const a = e.target.closest('a[href^="#"], a[href^="/#"]');
+    if (!a) return;
+
+    const href = a.getAttribute('href') || '';
+    const id = href.replace('/#', '').replace('#', '');
+    const target = document.getElementById(id);
+    if (!target) return;
+
+    e.preventDefault();
+    const top = Math.max(0, target.getBoundingClientRect().top + window.scrollY - headerHeight() - 8);
+    window.scrollTo({ top, behavior: 'smooth' });
+    history.pushState(null, '', `#${id}`);
+  };
+
+  document.addEventListener('click', onClick);
+})();
+
 /* ---- Footer year ---- */
 (() => {
   const yearEl = document.getElementById('year');
@@ -34,7 +70,6 @@
   const revealEls = document.querySelectorAll('.reveal');
   if (revealEls.length === 0) return;
 
-  // Respect reduced motion
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (prefersReduced) {
     revealEls.forEach(el => el.classList.add('show'));
@@ -55,71 +90,68 @@
     );
     revealEls.forEach(el => io.observe(el));
   } else {
-    // Fallback: reveal all
     revealEls.forEach(el => el.classList.add('show'));
   }
 })();
-<script>
-(function () {
-  /* ...your existing code above... */
 
-  /* --- Scroll-aware nav (Services / Results / FAQ / Contact) --- */
+/* ---- Scroll-aware nav highlight (Services / Results / FAQ / Contact) ---- */
+(() => {
   const navLinks = document.querySelectorAll('.site-nav a[href^="/#"], .site-nav a[href^="#"]');
-  const sectionIds = ['services','outcomes','faq','contact'];
+  const sectionIds = ['services', 'outcomes', 'faq', 'contact'];
   const sections = sectionIds
     .map(id => document.getElementById(id))
     .filter(Boolean);
 
-  // Helper: activate a link that points to #id
   const setActive = (id) => {
     navLinks.forEach(a => {
       const href = a.getAttribute('href') || '';
-      const targetId = href.replace('/#','').replace('#','');
+      const targetId = href.replace('/#', '').replace('#', '');
       a.classList.toggle('active', targetId === id);
     });
   };
 
   // Observe sections entering viewport
-  if ('IntersectionObserver' in window && sections.length){
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(en => {
-        if (en.isIntersecting){
-          const id = en.target.id;
-          setActive(id);
-        }
-      });
-    }, { threshold: 0.6 }); // 60% visible feels right
+  if ('IntersectionObserver' in window && sections.length) {
+    const io = new IntersectionObserver(
+      entries => {
+        entries.forEach(en => {
+          if (en.isIntersecting) setActive(en.target.id);
+        });
+      },
+      { threshold: 0.6 }
+    );
     sections.forEach(sec => io.observe(sec));
   }
 
-  // Also: click -> immediate highlight (nice UX)
+  // Update highlight when hash changes (e.g., back/forward)
+  window.addEventListener('hashchange', () => {
+    const id = (location.hash || '').replace('#', '');
+    if (sectionIds.includes(id)) setActive(id);
+  });
+
+  // Click -> immediate highlight (nice UX)
   navLinks.forEach(a => {
     a.addEventListener('click', () => {
       const href = a.getAttribute('href') || '';
-      const id = href.replace('/#','').replace('#','');
+      const id = href.replace('/#', '').replace('#', '');
       if (sectionIds.includes(id)) setActive(id);
     });
   });
-
-  /* --- Blog nav stays active on any /blog* path --- */
-  const path = window.location.pathname;
-  const blogLink = document.getElementById('nav-blog');
-  if (blogLink){
-    if (path.startsWith('/blog') || path.includes('/blog/')) {
-      blogLink.classList.add('active');
-    } else {
-      blogLink.classList.remove('active');
-    }
-  }
-// Highlight Videos nav when in /videos
-const videosLink = document.getElementById('nav-videos');
-if (videosLink && window.location.pathname.includes('/videos')) {
-  videosLink.classList.add('active');
-}
-  /* ...your existing code below... */
 })();
-</script>
-   
+
+/* ---- Page-aware nav highlight for Blog / Videos / News ---- */
+(() => {
+  const path = window.location.pathname;
+  const mark = (id, test) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    if (test) el.classList.add('active'); else el.classList.remove('active');
+  };
+  mark('nav-blog',   path.startsWith('/blog')   || path.includes('/blog/'));
+  mark('nav-videos', path.startsWith('/videos') || path.includes('/videos/'));
+  mark('nav-news',   path.startsWith('/news')   || path.includes('/news/'));
+})();
+
 /* ---- KPI counters (run when #outcomes visible) ---- */
 /* Markup example:
    <span class="kpi-number" data-target="35" data-suffix="%">0</span>
@@ -130,8 +162,7 @@ if (videosLink && window.location.pathname.includes('/videos')) {
 
   const startCounters = root => {
     root.querySelectorAll('.kpi-number').forEach(el => {
-      // prevent double-run
-      if (el.dataset.counted === '1') return;
+      if (el.dataset.counted === '1') return; // prevent double-run
       el.dataset.counted = '1';
 
       const target = Number(el.dataset.target || 0);
