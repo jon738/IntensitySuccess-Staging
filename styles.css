@@ -49,7 +49,7 @@
   }
 /* --- Header logo (light/dark switch + sizing) --- */
 .logo { display:flex; align-items:center; text-decoration:none; }
-.logo-img { height:70px; width:auto; display:block; }
+.logo-img { height:80px; width:auto; display:block; }
 
 /* hide the dark version by default (light mode) */
 .logo-img.dark { display:none; }
