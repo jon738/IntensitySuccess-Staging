@@ -64,7 +64,7 @@ body{padding-top:88px;}
 }
 
 .logo{display:flex; align-items:center; gap:10px}
-.logo-img{height:76px; width:auto; display:block; transition:height .25s ease}
+.logo-img{height:90px; width:auto; display:block; transition:height .25s ease}
 .logo-img.dark{display:none}
 @media (prefers-color-scheme: dark){
   .logo-img.light{display:none}
