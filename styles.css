@@ -388,3 +388,25 @@ body { padding-top: 88px !important; }                    /* keep content below 
 
 /* nav active underline always visible */
 .site-nav a.active::after { opacity: 1 !important; transform: scaleX(1) !important; }
+/* === NAV Contact link style fix === */
+.site-nav a[href*="#contact"] {
+  background: none !important;
+  color: var(--brand-2) !important;
+  padding: 8px 10px !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.site-nav a[href*="#contact"]:hover {
+  color: var(--brand) !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  .site-nav a[href*="#contact"] {
+    color: var(--text) !important;
+  }
+  .site-nav a[href*="#contact"]:hover {
+    color: var(--brand) !important;
+  }
+}
