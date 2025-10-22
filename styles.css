@@ -899,3 +899,23 @@ input[type="submit"].btn.btn-primary:hover {
 /* Optional: constrain line length in articles */
 .post .post-content { max-width: 68ch; margin-inline: auto; }
    }
+/* Logo handling for dark/light themes */
+.logo-img {
+  height: 42px;
+  width: auto;
+  display: block;
+  transition: opacity 0.35s ease;
+}
+
+.logo-img.dark {
+  display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  .logo-img.light {
+    display: none;
+  }
+  .logo-img.dark {
+    display: block;
+  }
+}
