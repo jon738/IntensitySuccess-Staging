@@ -53,17 +53,7 @@
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer class="site-footer">
-    <div class="footer-inner">
-      <p>© <span id="y"></span> Intensity Success · All rights reserved.</p>
-      <div class="footer-links">
-        <a href="/privacy">Privacy</a>
-        <a href="/terms">Terms</a>
-        <a href="/blog/">Blog</a>
-      </div>
-    </div>
-  </footer>
+ <div id="site-footer"></div>
 
   <!-- News logic (kept separate; does NOT try to wire menu) -->
   <script>
@@ -223,5 +213,26 @@
     }
   })();
   </script>
+  <script>
+(function () {
+  var projectPath = '/IntensitySuccess-Staging/';
+  var prefix = location.pathname.startsWith(projectPath) ? projectPath : '/';
+
+  function loadFooter() {
+    const mount = document.getElementById('site-footer');
+    if (!mount) return;
+    fetch(prefix + 'includes/footer.html', { cache: 'no-cache' })
+      .then(r => r.text())
+      .then(html => { mount.innerHTML = html; })
+      .catch(err => console.error('Footer load failed:', err));
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadFooter);
+  } else {
+    loadFooter();
+  }
+})();
+</script>
 </body>
 </html>
