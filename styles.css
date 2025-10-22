@@ -47,7 +47,23 @@
     background: rgba(17,26,43,.45);
     box-shadow: 0 6px 20px rgba(0,0,0,.55);
   }
+/* --- Header logo (light/dark switch + sizing) --- */
+.logo { display:flex; align-items:center; text-decoration:none; }
+.logo-img { height:40px; width:auto; display:block; }
 
+/* hide the dark version by default (light mode) */
+.logo-img.dark { display:none; }
+
+/* in dark mode, swap which image is visible */
+@media (prefers-color-scheme: dark){
+  .logo-img.light { display:none; }
+  .logo-img.dark  { display:block; }
+}
+
+/* small tweak for mobile */
+@media (max-width:700px){
+  .logo-img { height:34px; }
+}
   /* Cards */
   .card {
     background: var(--panel);
