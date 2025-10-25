@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>zSpace Professional Learning</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      color: #1f2937;
+      line-height: 1.6;
+    }
+    .hero-image {
+      background: #0b3a66 url('https://jon738.github.io/IntensitySuccess-Staging/testsite/asset/Services_Image.jpg') center/cover no-repeat;
+      height: 280px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-overlay {
+      background: rgba(0,0,0,0.45);
+      padding: 24px 32px;
+      border-radius: 10px;
+      text-align: center;
+      color: #fff;
+      max-width: 700px;
+    }
+    .hero-title {
+      font-weight: 800;
+      font-size: 28px;
+      letter-spacing: 0.2px;
+    }
+    .hero-subtitle {
+      opacity: 0.95;
+      font-size: 15px;
+      margin-top: 6px;
+    }
+    .title-strip {
+      background: #3b82c4;
+      color: #fff;
+      text-align: center;
+      padding: 16px 12px;
+    }
+    .title-strip-content {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .title-strip h1 {
+      font-weight: 800;
+      font-size: 18px;
+    }
+    .title-strip p {
+      opacity: 0.95;
+      font-size: 13px;
+      margin-top: 4px;
+    }
+    .page-body {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 16px 40px;
+    }
+    .card-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+    .card {
+      flex: 1 1 340px;
+      background: #fff;
+      border: 1px solid #e0e7ff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      padding: 22px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+      cursor: pointer;
+    }
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 28px rgba(37,99,169,0.15);
+      border-color: #3b82c4;
+    }
+    .card-icon {
+      text-align: center;
+      font-size: 34px;
+    }
+    .card h3 {
+      text-align: center;
+      color: #2563a9;
+      margin: 8px 0 6px;
+    }
+    .card ul {
+      font-size: 14px;
+      color: #374151;
+      line-height: 1.6;
+      margin: 12px 0 0 18px;
+    }
+    .card-note {
+      font-size: 12px;
+      color: #6b7280;
+      margin-top: 10px;
+    }
+    h2 {
+      color: #0b3a66;
+      text-align: center;
+      margin: 8px 0 18px;
+    }
+    .tier-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      justify-content: center;
+    }
+    .tier-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      justify-content: center;
+      width: 100%;
+    }
+    .tier-row:first-child {
+      max-width: 860px;
+    }
+    .tier-row:last-child {
+      max-width: 580px;
+      margin-top: 16px;
+    }
+    .tier-card {
+      flex: 1 1 240px;
+      max-width: 260px;
+      background: #fff;
+      border-radius: 12px;
+      padding: 18px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+    .tier-card:hover {
+      transform: translateY(-6px);
+    }
+    .tier-bronze {
+      border: 2px solid #d1d5db;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+    .tier-bronze:hover {
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+    .tier-silver {
+      border: 2px solid #c7d2fe;
+      box-shadow: 0 6px 14px rgba(59,130,246,0.10);
+    }
+    .tier-silver:hover {
+      box-shadow: 0 10px 24px rgba(59,130,246,0.18);
+    }
+    .tier-gold {
+      border: 2px solid #fcd34d;
+      box-shadow: 0 6px 14px rgba(252,211,77,0.25);
+    }
+    .tier-gold:hover {
+      box-shadow: 0 10px 24px rgba(252,211,77,0.35);
+    }
+    .tier-platinum {
+      border: 2px solid #67e8f9;
+      box-shadow: 0 6px 14px rgba(103,232,249,0.25);
+    }
+    .tier-platinum:hover {
+      box-shadow: 0 10px 24px rgba(103,232,249,0.35);
+    }
+    .tier-diamond {
+      border: 2px solid #f472b6;
+      box-shadow: 0 6px 14px rgba(244,114,182,0.20);
+    }
+    .tier-diamond:hover {
+      box-shadow: 0 10px 24px rgba(244,114,182,0.30);
+    }
+    .tier-title {
+      text-align: center;
+      font-weight: 800;
+    }
+    .tier-subtitle {
+      text-align: center;
+      font-size: 12px;
+      color: #6b7280;
+    }
+    .tier-card hr {
+      border: none;
+      border-top: 1px solid #eef2f7;
+      margin: 10px 0;
+    }
+    .tier-card ul {
+      font-size: 13px;
+      color: #374151;
+      line-height: 1.6;
+      list-style-type: disc;
+      margin: 0;
+      padding-left: 18px;
+      text-align: left;
+    }
+    .tier-note {
+      font-size: 11px;
+      color: #6b7280;
+      margin-top: 8px;
+    }
+    .addon-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      justify-content: center;
+    }
+    .addon-card {
+      flex: 1 1 320px;
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 18px;
+    }
+    .addon-title {
+      font-weight: 800;
+      color: #374151;
+      margin-bottom: 6px;
+    }
+    .addon-description {
+      font-size: 14px;
+      color: #374151;
+      line-height: 1.6;
+    }
+    .tech-services-box {
+      margin-top: 26px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .tech-services-content {
+      flex: 1;
+      min-width: 260px;
+    }
+    .tech-services-title {
+      font-weight: 800;
+      color: #0b3a66;
+      margin-bottom: 4px;
+      font-size: 16px;
+    }
+    .tech-services-text {
+      font-size: 14px;
+      color: #374151;
+      line-height: 1.6;
+    }
+    .btn {
+      display: inline-block;
+      padding: 10px 16px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 13px;
+      transition: opacity 0.2s;
+    }
+    .btn:hover {
+      opacity: 0.9;
+    }
+    .btn-primary {
+      background: #0066cc;
+      color: #fff;
+    }
+    .callout-box {
+      background: #f0f7ff;
+      border-left: 5px solid #2563a9;
+      border-radius: 8px;
+      padding: 22px 20px;
+      text-align: center;
+      margin: 36px auto 26px;
+      max-width: 900px;
+    }
+    .callout-title {
+      margin: 0;
+      color: #1e3a8a;
+      font-weight: 700;
+      font-size: 15px;
+    }
+    .callout-text {
+      margin: 6px 0 14px;
+      color: #334155;
+      font-size: 14px;
+    }
+    .cta-box {
+      background: #f0f7ff;
+      border-left: 5px solid #0066cc;
+      border-radius: 8px;
+      padding: 18px 20px;
+      text-align: center;
+      margin: 26px 0 10px;
+    }
+    .cta-buttons {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    @media (max-width: 768px) {
+      .hero-title {
+        font-size: 24px;
+      }
+      .card {
+        flex: 1 1 100%;
+      }
+      .tier-card {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- HERO IMAGE -->
+  <div class="hero-image">
+    <div class="hero-overlay">
+      <div class="hero-title">zSpace Professional Learning</div>
+      <div class="hero-subtitle">Inspire teaching. Accelerate adoption. Sustain impact.</div>
+    </div>
+  </div>
+
+  <!-- TITLE STRIP -->
+  <div class="title-strip">
+    <div class="title-strip-content">
+      <h1>Programs & Delivery Options</h1>
+      <p>Built for smooth rollouts and confident instruction.</p>
+    </div>
+  </div>
+
+  <!-- PAGE BODY -->
+  <div class="page-body">
+    <!-- WHAT'S INCLUDED / VIRTUAL -->
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon">💻</div>
+        <h3>Delivered Virtually</h3>
+        <ul>
+          <li>Implementation Planning Call</li>
+          <li>Virtual Technical Readiness check with Technical Services</li>
+          <li>1-hour Virtual "Getting Started" PL</li>
+          <li>Follow-up Virtual Office Hours (1-hr sessions)</li>
+        </ul>
+        <div class="card-note">Virtual elements are included across packages; total hours vary by tier.</div>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">🏫</div>
+        <h3>Delivered On-Site</h3>
+        <ul>
+          <li>Professional Learning Day(s)</li>
+          <li>Coaching Day(s)</li>
+          <li>Curriculum Integration Day</li>
+          <li>On-Site Tech Check Day (setup, validation, mgmt. training)</li>
+        </ul>
+        <div class="card-note">On-site elements scale with tier; Tech Check supports deployment readiness.</div>
+      </div>
+    </div>
+
+    <!-- PROGRAM TIERS -->
+    <h2>Professional Learning Packages</h2>
+
+    <div class="tier-grid">
+      <!-- Top Row (3 Cards) -->
+      <div class="tier-row">
+        <!-- Bronze -->
+        <div class="tier-card tier-bronze">
+          <div class="tier-title" style="color:#374151;">Bronze</div>
+          <div class="tier-subtitle">zSpace Basic</div>
+          <hr>
+          <ul>
+            <li>Virtual Planning + Tech Check</li>
+            <li>1-hr Virtual Getting Started PL</li>
+            <li>Follow-up Office Hours (x1)</li>
+            <li>Total Virtual Hours: 3</li>
+          </ul>
+          <div class="tier-note">Great for very small pilots.</div>
+        </div>
+
+        <!-- Silver -->
+        <div class="tier-card tier-silver">
+          <div class="tier-title" style="color:#1e3a8a;">Silver</div>
+          <div class="tier-subtitle">Getting Started (5–10 devices, 1 campus)</div>
+          <hr>
+          <ul>
+            <li>Virtual Planning + Tech Check</li>
+            <li>1 On-site PL Day</li>
+            <li>Follow-up Office Hours (x2)</li>
+            <li>Total Virtual Hours: 4</li>
+            <li>On-Site Tech Check Day</li>
+          </ul>
+          <div class="tier-note">Foundation for single-site starts.</div>
+        </div>
+
+        <!-- Gold -->
+        <div class="tier-card tier-gold">
+          <div class="tier-title" style="color:#92400e;">Gold</div>
+          <div class="tier-subtitle">Teacher Essentials (Minimum recommendation)</div>
+          <hr>
+          <ul>
+            <li>Virtual Planning + Tech Check</li>
+            <li>2 On-site PL Days</li>
+            <li>1 On-site Coaching Day</li>
+            <li>Follow-up Office Hours (x3)</li>
+            <li>Total Virtual Hours: 5</li>
+            <li>On-Site Tech Check Day</li>
+          </ul>
+          <div class="tier-note">Recommended baseline for most sites.</div>
+        </div>
+      </div>
+
+      <!-- Bottom Row (2 Cards) -->
+      <div class="tier-row">
+        <!-- Platinum -->
+        <div class="tier-card tier-platinum">
+          <div class="tier-title" style="color:#065f46;">Platinum</div>
+          <div class="tier-subtitle">Teaching & Learning (for large impl. or 2-yr licenses)</div>
+          <hr>
+          <ul>
+            <li>Virtual Planning + Tech Check</li>
+            <li>3 On-site PL Days</li>
+            <li>1 On-site Coaching Day</li>
+            <li>1 On-site Curriculum Integration Day</li>
+            <li>Follow-up Office Hours (x5)</li>
+            <li>Total Virtual Hours: 6</li>
+            <li>On-Site Tech Check Day</li>
+          </ul>
+          <div class="tier-note">Deeper coaching + integration support.</div>
+        </div>
+
+        <!-- Diamond -->
+        <div class="tier-card tier-diamond">
+          <div class="tier-title" style="color:#831843;">Diamond</div>
+          <div class="tier-subtitle">Teaching & Integration (for large impl. or 3-yr licenses)</div>
+          <hr>
+          <ul>
+            <li>Virtual Planning + Tech Check</li>
+            <li>3 On-site PL Days</li>
+            <li>2 On-site Coaching Days</li>
+            <li>1 On-site Curriculum Integration Day</li>
+            <li>Follow-up Office Hours (x5)</li>
+            <li>Total Virtual Hours: 8</li>
+            <li>On-Site Tech Check Day</li>
+          </ul>
+          <div class="tier-note">Best for multi-year, multi-site success.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ADD-ONS -->
+    <h2 style="margin-top:28px; margin-bottom:14px;">Add-Ons (with Package Purchase)</h2>
+    <div class="addon-grid">
+      <div class="addon-card">
+        <div class="addon-title">Virtual Follow-Up Hours (5×1-hr)</div>
+        <div class="addon-description">
+          Live sessions on best practices with zSpace, StudioA3, apps, teaching workflows, LMS integration, and T3 ("train-the-trainer").
+        </div>
+      </div>
+      <div class="addon-card">
+        <div class="addon-title">Curriculum Integration / Mapping</div>
+        <div class="addon-description">
+          Customized mapping to align zSpace lessons with your local curriculum for seamless classroom implementation.
+        </div>
+      </div>
+      <div class="addon-card">
+        <div class="addon-title">On-Site Coaching (1-1 / max 2 teachers per day)</div>
+        <div class="addon-description">
+          Model lessons, observe instruction, and reflect with a PL Specialist to translate learning into daily practice.
+        </div>
+      </div>
+      <div class="addon-card">
+        <div class="addon-title">Half-Day Professional Learning</div>
+        <div class="addon-description">
+          Add a consecutive half-day to a full-day on-site service for focused extensions or make-ups.
+        </div>
+      </div>
+    </div>
+
+    <!-- RELATED TECH SERVICES -->
+    <div class="tech-services-box">
+      <div class="tech-services-content">
+        <div class="tech-services-title">Related: Technical Services</div>
+        <div class="tech-services-text">
+          Pair Professional Learning with an on-site Tech Check or deployment support to ensure systems are configured, validated, and managed effectively.
+        </div>
+      </div>
+      <div>
+        <a href="https://support.zspace.com/s/test-jon" class="btn btn-primary">
+          Explore Technical Services
+        </a>
+      </div>
+    </div>
+
+    <!-- RESOURCES -->
+    <h2 style="margin-top:28px; margin-bottom:14px;">Resources</h2>
+    <div class="card-grid" style="margin-bottom:8px;">
+      <!-- Beyond Basics Card -->
+      <div class="card" style="max-width:360px; display:flex; flex-direction:column; justify-content:space-between;">
+        <div>
+          <div class="card-icon" style="font-size:36px;">🎓</div>
+          <h3 style="font-size:18px;">Beyond Basics Series</h3>
+          <p style="font-size:14px; color:#4b5563; line-height:1.6; text-align:center;">
+            Self-paced videos to deepen skills, extend activities, and spark new lesson ideas.
+          </p>
+        </div>
+        <div style="text-align:center; margin-top:14px;">
+          <a href="https://zspace.com/edu/beyond-basics" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+            Visit Beyond Basics
+          </a>
+        </div>
+      </div>
+
+      <!-- eBooks Card -->
+      <div class="card" style="max-width:360px; display:flex; flex-direction:column; justify-content:space-between;">
+        <div>
+          <div class="card-icon" style="font-size:36px;">📚</div>
+          <h3 style="font-size:18px;">zSpace eBooks</h3>
+          <p style="font-size:14px; color:#4b5563; line-height:1.6; text-align:center;">
+            Downloadable guides packed with strategies, classroom examples, and planning checklists for effective AR/VR instruction.
+          </p>
+        </div>
+        <div style="text-align:center; margin-top:14px;">
+          <a href="https://zspace.com/edu/ebooks" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+            Browse eBooks
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- UPCOMING TRAINING CONTACT CALLOUT -->
+    <div class="callout-box">
+      <p class="callout-title">Have an upcoming Professional Learning session?</p>
+      <p class="callout-text">
+        If you're registered for training and have questions about your schedule, connection link, or materials,
+        please reach out to our <strong>Professional Learning team</strong>.
+      </p>
+      <a href="mailto:pl@zspace.com?subject=Upcoming%20Professional%20Learning%20Session%20Question&body=Hello%20zSpace%20Professional%20Learning%20Team,%0D%0A%0D%0AI%27m%20scheduled%20for%20an%20upcoming%20training%20and%20have%20a%20question.%0D%0A%0D%0ASchool/District:%20%0D%0ASession%20Date:%20%0D%0ATopic%20(if%20known):%20%0D%0A%0D%0AQuestion:%20%0D%0A%0D%0AThank%20you!%0D%0A" class="btn btn-primary">
+        Contact the PL Team
+      </a>
+    </div>
+
+    <!-- CONTACT + CTA -->
+    <div class="cta-box">
+      <p class="callout-title" style="color:#1e3a8a;">Ready to plan the right PL package?</p>
+      <p class="callout-text">We'll help you match tiers to your rollout size, timeline, and goals.</p>
+      <div class="cta-buttons">
+        <a href="mailto:clientservices@zspace.com?subject=zSpace%20Professional%20Learning%20Planning%20Request&body=Hello%20zSpace%20Client%20Services%20Team,%0D%0A%0D%0AWe%E2%80%99d%20like%20help%20selecting/scheduling%20a%20Professional%20Learning%20package.%0D%0A%0D%0ASchool/District:%20%0D%0AContact%20Name:%20%0D%0AEmail:%20%0D%0APhone:%20%0D%0ARollout%20size%20(devices/sites):%20%0D%0ATarget%20dates:%20%0D%0AAdditional%20notes:%20%0D%0A" class="btn btn-primary">
+          Contact Client Services
+        </a>
+        <a href="mailto:sales@zspace.com?subject=zSpace%20Professional%20Learning%20Quote%20Request&body=Hello%20zSpace%20Sales%20Team,%0D%0A%0D%0APlease%20provide%20a%20quote%20for%20a%20Professional%20Learning%20package.%0D%0A%0D%0APreferred%20tier%20(if%20known):%20Bronze%20%7C%20Silver%20%7C%20Gold%20%7C%20Platinum%20%7C%20Diamond%0D%0ASchool/District:%20%0D%0AContact%20Name:%20%0D%0AEmail:%20%0D%0APhone:%20%0D%0ARequested%20timeline:%20%0D%0A" class="btn btn-primary">
+          Request a Quote
+        </a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
