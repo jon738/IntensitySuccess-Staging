@@ -1,1 +1,274 @@
-hello world
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>zSpace Technical Services & Professional Learning</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      color: #1f2937;
+      line-height: 1.6;
+    }
+    .hero-image {
+      background: url('/testsite/asset/servicesimage.jpeg') center/cover no-repeat;
+      height: 300px;
+    }
+    .title-strip {
+      background: #3b82c4;
+      color: #fff;
+      text-align: center;
+      padding: 18px 12px;
+    }
+    .title-strip-content {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .title-strip h1 {
+      font-weight: 700;
+      font-size: 20px;
+      letter-spacing: 0.3px;
+      line-height: 1.4;
+    }
+    .title-strip p {
+      opacity: 0.95;
+      font-size: 15px;
+      margin-top: 6px;
+      line-height: 1.5;
+    }
+    .page-body {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 16px 40px;
+    }
+    .video-container {
+      display: flex;
+      justify-content: center;
+      margin: 10px 0 40px;
+    }
+    .video-wrapper {
+      width: 760px;
+      max-width: 100%;
+      box-shadow: 0 8px 22px rgba(0,0,0,0.15);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .video-wrapper iframe {
+      width: 100%;
+      height: 430px;
+      border: 0;
+    }
+    .card-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 24px;
+    }
+    .card {
+      flex: 1 1 320px;
+      max-width: 340px;
+      background: #fff;
+      border: 1px solid #e0e7ff;
+      border-radius: 12px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .card-icon {
+      text-align: center;
+      font-size: 36px;
+    }
+    .card h3 {
+      text-align: center;
+      color: #2563a9;
+      margin: 8px 0;
+      font-size: 18px;
+    }
+    .card-description {
+      font-size: 14px;
+      color: #4b5563;
+      line-height: 1.6;
+      text-align: center;
+    }
+    .card ul {
+      font-size: 13px;
+      color: #374151;
+      line-height: 1.6;
+      margin: 14px 0 0 18px;
+      padding-left: 0;
+    }
+    .card li {
+      margin-bottom: 4px;
+    }
+    .card-button-container {
+      text-align: center;
+      margin-top: 16px;
+    }
+    .card-button {
+      display: inline-block;
+      border: 1px solid #2563a9;
+      color: #2563a9;
+      padding: 8px 14px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 13px;
+      transition: background-color 0.2s, color 0.2s;
+    }
+    .card-button:hover {
+      background-color: #2563a9;
+      color: #fff;
+    }
+    .cta-strip {
+      background: #3b82c4;
+      color: #fff;
+      padding: 22px 12px;
+      text-align: center;
+    }
+    .cta-strip-content {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .cta-strip-title {
+      font-weight: 800;
+      letter-spacing: 0.2px;
+      margin-bottom: 8px;
+    }
+    .cta-button {
+      display: inline-block;
+      padding: 10px 16px;
+      background: #ffffff;
+      color: #2563a9;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 13px;
+      transition: background-color 0.2s;
+    }
+    .cta-button:hover {
+      background: #f0f0f0;
+    }
+    @media (max-width: 768px) {
+      .video-wrapper iframe {
+        height: 300px;
+      }
+      .card {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- HERO IMAGE -->
+  <div class="hero-image"></div>
+
+  <!-- THIN BLUE TITLE STRIP -->
+  <div class="title-strip">
+    <div class="title-strip-content">
+      <h1>zSpace Technical Services &amp; Professional Learning</h1>
+      <p>zSpace services enable learning through AR/VR experiences.</p>
+    </div>
+  </div>
+
+  <!-- PAGE BODY -->
+  <div class="page-body">
+    <!-- CENTERED VIDEO -->
+    <div class="video-container">
+      <div class="video-wrapper">
+        <iframe
+          src="https://www.youtube.com/embed/avNuW4e3i3U?si=McHePGWEXdMjBdPY&modestbranding=1&rel=0"
+          title="zSpace Services Overview"
+          allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+
+    <!-- CARD GRID -->
+    <div class="card-grid">
+      <!-- Professional Learning Card -->
+      <div class="card">
+        <div>
+          <div class="card-icon">🎓</div>
+          <h3>Professional Learning</h3>
+          <p class="card-description">
+            Inspire curiosity and accelerate understanding through hands-on AR/VR professional learning for educators and district teams.
+          </p>
+          <ul>
+            <li>On-site and remote PL workshops</li>
+            <li>Curriculum integration &amp; lesson design</li>
+            <li>Ongoing PD and office hours</li>
+          </ul>
+        </div>
+        <div class="card-button-container">
+          <a href="https://zspace.com/services" class="card-button">
+            Explore Professional Learning
+          </a>
+        </div>
+      </div>
+
+      <!-- Online Resources Card -->
+      <div class="card">
+        <div>
+          <div class="card-icon">💻</div>
+          <h3>Educator Resources</h3>
+          <p class="card-description">
+            Research, Learn, and Experience Lessons with AR/VR — designed to complement on-site PL.
+          </p>
+          <ul>
+            <li>zSpace 101</li>
+            <li>Standards &amp; Strategies</li>
+            <li>Lessons</li>
+            <li>Applications</li>
+          </ul>
+        </div>
+        <div class="card-button-container">
+          <a href="https://zspace.com/edu" target="_blank" rel="noopener noreferrer" class="card-button">
+            Explore
+          </a>
+        </div>
+      </div>
+
+      <!-- Technical Services Card -->
+      <div class="card">
+        <div>
+          <div class="card-icon">🧰</div>
+          <h3>Technical Services</h3>
+          <p class="card-description">
+            Ensure your zSpace deployment runs flawlessly with expert setup, validation, and ongoing support for your IT and classroom teams.
+          </p>
+          <ul>
+            <li>Tech Readiness meetings</li>
+            <li>On-site and remote deployment</li>
+            <li>App Manager &amp; network optimization</li>
+          </ul>
+        </div>
+        <div class="card-button-container">
+          <a href="https://zspace.com/services" class="card-button">
+            Explore Technical Services
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLUE CTA STRIP -->
+  <div class="cta-strip">
+    <div class="cta-strip-content">
+      <div class="cta-strip-title">Ready to start planning?</div>
+      <a
+        href="mailto:clientservices@zspace.com?subject=zSpace%20Professional%20Learning%20or%20Technical%20Readiness%20Request&body=Hello%20zSpace%20Client%20Services%20Team,%0D%0A%0D%0AI%27d%20like%20to%20confirm%20or%20schedule%20our%20Professional%20Learning%20session%20and/or%20Technical%20Readiness%20meeting.%0D%0A%0D%0ASchool/District:%20%0D%0AContact%20Name:%20%0D%0AEmail:%20%0D%0APhone:%20%0D%0APreferred%20Dates:%20%0D%0AType%20of%20Service%20(PL%20Session,%20Readiness,%20or%20Both):%20%0D%0A%0D%0AAdditional%20Notes:%20%0D%0A%0D%0AThank%20you!%0D%0A"
+        class="cta-button">
+        Contact Client Services
+      </a>
+    </div>
+  </div>
+</body>
+</html>
